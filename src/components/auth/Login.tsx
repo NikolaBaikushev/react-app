@@ -2,7 +2,7 @@ import { useState } from "react";
 import { loginUser } from "../../services/auth.service";
 import ErrorAlert from "../common/ErrorAlert";
 import { getErrorMessage } from "../../guards/getErrorMessage";
-import { useAuth } from "../context/UserContext";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
