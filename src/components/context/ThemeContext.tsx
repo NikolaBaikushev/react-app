@@ -1,5 +1,5 @@
-// src/context/ThemeContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
+import { getLocalStorageItem, LocalStorageKeys, setLocalStorageItem } from "../../services/localStorage.service";
 
 export const THEME_LIGHT = "emptymist";
 export const THEME_DARK = "grumpyplanet";
@@ -10,12 +10,14 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || THEME_LIGHT;
+    const value = getLocalStorageItem(LocalStorageKeys.THEME) || THEME_LIGHT;
+    setLocalStorageItem(LocalStorageKeys.THEME, value);
+    return value;
   });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    setLocalStorageItem(LocalStorageKeys.THEME, theme);
   }, [theme]);
 
   return (
