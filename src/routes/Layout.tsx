@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { THEME_LIGHT, ThemeToggle } from "../components/common/ThemeToggle";
 import React, { useContext } from "react";
+import { useTheme } from "../components/context/ThemeContext";
 
 
 export const Home = () => (
@@ -9,16 +10,14 @@ export const Home = () => (
   </div>
 )
 
-const Theme = React.createContext('emptymist')
-
 
 export const Layout = () => {
-  const [theme, setTheme] = useContext(Theme)
 
-  console.log(theme, 'layout ....')
+  // const [theme, setTheme] = useTheme();
+  // console.log(theme);
+  
   return (
-    <Theme.Provider value={theme}>
-        <div>
+    <div>
       <div>
         <div className="navbar bg-base-300 w-full">
           <div className="navbar-start">
@@ -36,8 +35,7 @@ export const Layout = () => {
         </main>
       </div>
     </div>
-    </Theme.Provider>
-    )
+  )
 }
 
 export default Layout;
