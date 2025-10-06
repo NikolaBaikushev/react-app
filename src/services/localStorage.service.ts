@@ -1,5 +1,6 @@
 export enum LocalStorageKeys {
-    THEME = 'theme'
+    THEME = 'theme',
+    USER = 'user'
 }
 
 export const setLocalStorageItem = (key: LocalStorageKeys, value: any) => {
@@ -11,5 +12,5 @@ export const getLocalStorageItem = (key: LocalStorageKeys) => {
 }
 
 export const deleteLocalStorageItem = (key: LocalStorageKeys) => {
-    localStorage.deleteItem(key)
+    localStorage.removeItem(key)
 }
