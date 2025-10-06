@@ -1,6 +1,7 @@
 export enum LocalStorageKeys {
     THEME = 'theme',
-    USER = 'user'
+    USER = 'user',
+    FAVOURITE_QUOTES = 'favQuotes'
 }
 
 export const setLocalStorageItem = (key: LocalStorageKeys, value: any) => {
