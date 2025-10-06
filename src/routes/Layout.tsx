@@ -1,21 +1,31 @@
 import { Link, Outlet } from "react-router-dom";
 
 
-const Home = () => {
-  return (<><h1 className="text-blue-400">Welcome to my App!</h1></>)
-}
+export const Home = () => (
+  <div className="text-center py-20">
+    <h1 className="text-3xl font-bold">Welcome to My App</h1>
+  </div>
+)
 
 
 export const Layout = () => {
     return (
     <div>
-        <Home></Home>
-        <ul className="flex flex-row gap-x-2 w-full text-left">
-            <Link to="login">Login</Link>
-            <Link to="register">Register</Link>
-            <Link to="/">Home</Link>
-        </ul>
-        <Outlet></Outlet>
+         <div>
+      <div className="navbar bg-base-100 w-full shadow-md">
+        <div className="flex-1">
+          <Link to="/" className="btn btn-ghost text-xl">MyApp</Link>
+        </div>
+        <div className="flex-none space-x-2">
+          <Link to="/login" className="btn btn-lg btn-ghost">Login</Link>
+          <Link to="/register" className="btn btn-lg btn-ghost">Register</Link>
+        </div>
+      </div>
+
+      <main className="px-4 max-w-7xl mx-auto p-8">
+        <Outlet />
+      </main>
+    </div>
     </div>)
 }
 
