@@ -1,5 +1,43 @@
 @import "tailwindcss";
-@plugin "daisyui";
+
+@plugin "daisyui" {
+   themes: light --default, dark --prefersdark, emptymist;
+ }
+
+@plugin "daisyui/theme" {
+  name: "emptymist";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(98% 0.002 247.839);
+  --color-base-200: oklch(96% 0.003 264.542);
+  --color-base-300: oklch(92% 0.006 264.531);
+  --color-base-content: oklch(21% 0.034 264.665);
+  --color-primary: oklch(82% 0.189 84.429);
+  --color-primary-content: oklch(27% 0.077 45.635);
+  --color-secondary: oklch(71% 0.202 349.761);
+  --color-secondary-content: oklch(28% 0.109 3.907);
+  --color-accent: oklch(77% 0.152 181.912);
+  --color-accent-content: oklch(27% 0.046 192.524);
+  --color-neutral: oklch(21% 0.034 264.665);
+  --color-neutral-content: oklch(98% 0.002 247.839);
+  --color-info: oklch(54% 0.245 262.881);
+  --color-info-content: oklch(97% 0.014 254.604);
+  --color-success: oklch(59% 0.145 163.225);
+  --color-success-content: oklch(97% 0.021 166.113);
+  --color-warning: oklch(68% 0.162 75.834);
+  --color-warning-content: oklch(98% 0.026 102.212);
+  --color-error: oklch(57% 0.245 27.325);
+  --color-error-content: oklch(97% 0.013 17.38);
+  --radius-selector: 0.25rem;
+  --radius-field: 1rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1.5px;
+  --depth: 0;
+  --noise: 1;
+}
 
 #root {
   /* max-width: 1280px;
