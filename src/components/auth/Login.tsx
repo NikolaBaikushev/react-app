@@ -20,7 +20,7 @@ const Login = () => {
             <input type="password" placeholder="Password" className="input input-bordered w-full" />
           </div>
 
-          <button className="btn btn-primary w-full">Login</button>
+          <button className="btn btn-primary text-base w-full">Login</button>
         </form>
       </div>
     </div>
