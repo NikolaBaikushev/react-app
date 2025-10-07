@@ -1,39 +1,9 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
-import { THEME_LIGHT, ThemeToggle } from "../components/common/ThemeToggle";
-import React, { useContext, useEffect, useEffectEvent, useState } from "react";
-import { useTheme } from "../components/context/ThemeContext";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import { ThemeToggle } from "../components/common/ThemeToggle";
 import { useAuth, useLogout } from "../components/context/AuthContext";
-import { deleteLocalStorageItem, LocalStorageKeys } from "../services/localStorage.service";
-import { getAllQuotes } from "../services/quote.service";
-import type { QuoteItem } from "../types/quotes/quotes";
-import Quotes from "../components/quotes/Quotes";
 
-
-export const Home = () => {
-  const [user, setUser] = useAuth();
-  const [quotes, setQuotes] = useState([] as QuoteItem[]);
-
-  useEffect(() => {
-    const fetchQuotes = async () => {
-      try {
-        const data = await getAllQuotes();
-        setQuotes(data.quotes);
-      } catch (error) {
-        console.error("Failed to load quotes:", error);
-      }
-    }
-    fetchQuotes();
-  }, [])
-
-  const quotesHtml = user ? <>
-    <div className="text-center py-20">
-      <h1 className="text-3xl font-bold">Welcome, <span className="text-emerald-500">{user?.username}</span>!</h1>
-      {quotes.length && <Quotes quotes={quotes} />}
-    </div>
-  </> : <><Navigate to="/login"></Navigate></>;
-
-  return quotesHtml;
-}
+const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `btn text-xl ${isActive ? "btn-primary" : "btn-ghost"}`;
 
 
 export const Layout = () => {
@@ -44,9 +14,10 @@ export const Layout = () => {
     <div>
       <div>
         <div className="navbar bg-base-300 w-full">
-          <div className="navbar-start">
+          <div className="navbar-start gap-x-2">
             <ThemeToggle></ThemeToggle>
-            <Link to="/" className="btn btn-ghost text-xl ">Quotes</Link>
+            <NavLink to="/" className={getNavLinkClass}>Quotes</NavLink>
+            <NavLink to="/products" className={getNavLinkClass}>Products</NavLink>
           </div>
           <div className="navbar-end flex-none space-x-2">
             {user
