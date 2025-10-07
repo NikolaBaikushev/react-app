@@ -23,7 +23,7 @@ export const dummyjsonApi = createApi({
     getProducts: builder.query<Product[], void>({
       query: () => 'products',
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 15000))
+        await new Promise((resolve) => setTimeout(resolve, 5000))
         return response.products
       },
     })

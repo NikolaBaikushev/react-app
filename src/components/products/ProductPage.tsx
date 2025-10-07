@@ -8,7 +8,6 @@ import Products from "./Products";
 
 const ProductsPage = () => {
   return <div>
-    <h1 className="text-lg text-center text-accent">Products</h1>
     <Products />
   </div>
 }
