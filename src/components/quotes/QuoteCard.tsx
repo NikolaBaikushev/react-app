@@ -1,9 +1,14 @@
 import type { QuoteItem } from "../../types/quotes/quotes";
+import { THEME_LIGHT, useTheme } from "../context/ThemeContext";
 
 export type QuoteProps = QuoteItem & { isFavourite: boolean, toggleFavouriteQuote: (id: number) => void};
 
 const QuoteCard = (props: QuoteProps) => {
-    return (<div className="card card-md card-border bg-base-100 w-96">
+    const [theme] = useTheme()
+
+    const baseClass = theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200';
+    
+    return (<div className={`card card-md card-border ${baseClass} w-96 rounded-2xl`}>
         <div className="card-body">
             <h2 className="card-title">{props.author}</h2>
             <p className="text-left">{props.quote}</p>

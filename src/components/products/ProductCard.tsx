@@ -1,7 +1,7 @@
 import type { Product } from "../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleFavourite } from "../../redux/slices/products/productsSlice";
-import { THEME_LIGHT, useTheme } from "../context/ThemeContext";
+import { THEME_DARK, THEME_LIGHT, useTheme } from "../context/ThemeContext";
 
 type ProductCardProps = {
     product: Product
@@ -12,11 +12,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     const favouriteProducts = useAppSelector(state => state.products.favouriteProducts);
     const [theme] = useTheme();
 
-    const baseClass = theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200';
 
-    return <div className={`card w-full shadow-sm ${baseClass}`}>
+    const themeClasses = {
+        card_container_bg_base_class: theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200',
+        img_container_bg_base_class: theme === THEME_DARK && 'bg-base-300'
+    }
+
+    return <div className={`card w-full shadow-sm ${themeClasses.card_container_bg_base_class}  rounded-2xl`}>
         <figure>
             <img
+                className={`object-center rounded-2xl ${themeClasses.img_container_bg_base_class}`}
                 src={product.thumbnail}
                 alt={product.description} />
         </figure>
