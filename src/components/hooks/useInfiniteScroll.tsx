@@ -1,24 +1,30 @@
 import { useEffect, useRef } from "react";
 
-export function useInfiniteScroll(callback: () => void, hasMore: boolean) {
+
+
+export function useInfiniteScroll(callback: () => void, hasMore: boolean, isFetching: boolean) {
     const sentinelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!hasMore) return;
+        if (isFetching || !hasMore) return;
 
-        const observer = new IntersectionObserver(entries => {
+        const observer = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
             if (entries[0].isIntersecting) {
                 callback();
             }
-        }, { root: null, rootMargin: '0px', threshold: 1.0});
+        }, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.25,
+        });
 
         const current = sentinelRef.current;
         if (current) observer.observe(current);
 
         return () => {
-            if (current) observer.unobserve(current);
+            if (current) observer.unobserve(current); observer.disconnect();
         };
-    }, [callback, hasMore]);
+    }, [callback, hasMore, isFetching]);
 
     return sentinelRef;
 }

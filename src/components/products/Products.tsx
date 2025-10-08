@@ -24,23 +24,24 @@ const Products = () => {
         if (!isFetching) {
             setSkip((state) => state + LIMIT);
         }
-    }, [isFetching]); 
-    
-    const sentinelRef = useInfiniteScroll(loadMore, hasMore as boolean);
+    }, [isFetching]);
+
+    const sentinelRef = useInfiniteScroll(loadMore, hasMore as boolean, isFetching);
 
     return (
         <>{isLoading
             ? <Skeleton length={LIMIT} container="div" className="grid grid-cols-3 gap-10 items-center w-full" />
             :
-            <div className="grid grid-cols-3 gap-10 items-center w-full">
+            <div className="grid grid-cols-3 gap-10 items-stretch min-h-[80vh]">
+
                 {products?.map(product => <ProductCard key={product.id} product={product}></ProductCard>)}
             </div>
         }
             {isFetching && <>
                 <Skeleton length={LIMIT} container="div" className="mt-5 grid grid-cols-3 gap-10 items-center w-full" />
             </>}
-            <div ref={sentinelRef} style={{ height: 1 }} />
 
+            <div ref={sentinelRef} style={{ height: '80px' }} />
         </>
     )
 
