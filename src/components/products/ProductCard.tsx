@@ -72,6 +72,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                         </button>
                     </div>
                 </div>
+                <div>
+                    <p className="text-lg font-semibold">{product.price}</p>
+                </div>
+
             </div>
 
         </div>
