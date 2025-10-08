@@ -28,13 +28,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 alt={product.description} />
         </figure>
         <div className="card-body text-left">
-            <h2 className="card-title">{product.title}</h2>
+            <h2 className="card-title ">{product.title}</h2>
             <p className="">{product.description}</p>
 
             <div className="card-actions w-full flex flex-col justify-start">
                 <div className="flex flex-row gap-x-2 justify-normal mt-3">
                     {product.tags.map((tag) => (
-                        <div key={tag} className="badge badge-outline">{tag}</div>
+                        <div key={tag} className="badge badge-accent badge-outline">{tag}</div>
                     ))}
                 </div>
 
