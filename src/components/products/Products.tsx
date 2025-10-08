@@ -41,7 +41,7 @@ const Products = () => {
                 <Skeleton length={LIMIT} container="div" className="mt-5 grid grid-cols-3 gap-10 items-center w-full" />
             </>}
 
-            <div ref={sentinelRef} style={{ height: '80px' }} />
+            { hasMore && !isFetching && <div ref={sentinelRef} style={{ height: '1px' }} />}
         </>
     )
 
