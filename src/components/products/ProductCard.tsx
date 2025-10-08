@@ -38,7 +38,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                     ))}
                 </div>
 
-                <div className="flex justify-between items-center w-full mt-1">
+
+                <p className="text-lg font-semibold mt-2">${product.price}</p>
+
+                <div className="flex justify-between items-center w-full">
                     <div className="rating">
                         {Array.from({ length: 5 }).map((_, index) => (
                             <div
@@ -72,10 +75,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                         </button>
                     </div>
                 </div>
-                <div>
-                    <p className="text-lg font-semibold">{product.price}</p>
-                </div>
-
             </div>
 
         </div>
