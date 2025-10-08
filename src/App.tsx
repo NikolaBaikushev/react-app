@@ -11,8 +11,8 @@ import ProductsPage from './components/products/ProductPage'
 import { ErrorBoundaryWrapper } from './components/common/ErrorBoundaryWrapper'
 import { Suspense } from 'react'
 import ErrorTest from './components/common/ErrorTest'
+import NotFoundPage from './components/common/NotFoundPage'
 
-export const NotFoundPage = () => <div className="text-center text-2xl text-red-500">404 - Page Not Found</div>;
 
 function App() {
   return (
