@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useInsertionEffect, useRef, useState } from "react";
 import { useGetProductsLimitedQuery, useGetProductsQuery } from "../../redux/api/api";
 import { Skeleton } from "../common/Skeleton";
 import SkeletonCard from "../common/SkeletonCard";
 import { ProductCard } from "./ProductCard";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
-const LIMIT = 100;
+const LIMIT = 15;
 
 const Products = () => {
     const [skip, setSkip] = useState(0);
@@ -19,28 +20,27 @@ const Products = () => {
 
     const hasMore = data && (products.length < data.total);
 
+    const loadMore = useCallback(() => {
+        if (!isFetching) {
+            setSkip((state) => state + LIMIT);
+        }
+    }, [isFetching]); 
+    
+    const sentinelRef = useInfiniteScroll(loadMore, hasMore as boolean);
+
     return (
         <>{isLoading
             ? <Skeleton length={LIMIT} container="div" className="grid grid-cols-3 gap-10 items-center w-full" />
             :
             <div className="grid grid-cols-3 gap-10 items-center w-full">
-                {products?.map(product => <ProductCard product={product}></ProductCard>)}
+                {products?.map(product => <ProductCard key={product.id} product={product}></ProductCard>)}
             </div>
-            }
+        }
             {isFetching && <>
                 <Skeleton length={LIMIT} container="div" className="mt-5 grid grid-cols-3 gap-10 items-center w-full" />
             </>}
-            <div>
-                <div className="col-span-3 flex justify-center mt-4">
-                    <button
-                        onClick={() => setSkip(state => state + LIMIT)}
-                        disabled={isLoading || !hasMore}
-                        className="btn btn-primary"
-                    >
-                        Load More
-                    </button>
-                </div>
-            </div>
+            <div ref={sentinelRef} style={{ height: 1 }} />
+
         </>
     )
 

@@ -34,7 +34,7 @@ export const dummyjsonApi = createApi({
     getProductsLimited: builder.query<ProductResponse, { limit: number, skip: number }>({
       query: ({limit, skip}) => `products?limit=${limit}&skip=${skip}`,
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 5000))
+        // await new Promise((resolve) => setTimeout(resolve, 2000))
         return response
       },
     }),
