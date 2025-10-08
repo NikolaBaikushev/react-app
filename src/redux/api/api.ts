@@ -14,6 +14,7 @@ export type Product = {
   rating: number,
   stock: number,
   thumbnail: string,
+  tags: string[]
 }
 
 export const dummyjsonApi = createApi({
@@ -23,10 +24,10 @@ export const dummyjsonApi = createApi({
     getProducts: builder.query<Product[], void>({
       query: () => 'products',
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 5000))
+        await new Promise((resolve) => setTimeout(resolve, 1000))
         return response.products
       },
-    })
+    }),
   }),
 })
 
