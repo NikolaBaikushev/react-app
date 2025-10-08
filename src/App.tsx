@@ -8,19 +8,23 @@ import Quotes from './components/quotes/Quotes'
 import Home from './components/home/Home'
 import { useGetProductsQuery } from './redux/api/api'
 import ProductsPage from './components/products/ProductPage'
+import { ErrorBoundaryWrapper } from './components/common/ErrorBoundaryWrapper'
+import { Suspense } from 'react'
 
+export const NotFound = () => <div className="text-center text-2xl text-red-500">404 - Page Not Found</div>;
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route element={<Home />}>
-          <Route index element={<QuotesPage />} />
-          <Route path="products" element={<ProductsPage />} />
-        </Route>
+          <Route element={<Home />}>
+            <Route index element={<QuotesPage />} />
+            <Route path="products" element={<ProductsPage />} />
+          </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

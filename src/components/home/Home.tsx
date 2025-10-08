@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundaryWrapper } from "../common/ErrorBoundaryWrapper";
 
 export const Home = () => {
   const [user] = useAuth();
@@ -12,7 +14,7 @@ export const Home = () => {
         Welcome, <span className="text-emerald-500">{user.username}</span>!
       </h1>
       <div className="mt-10">
-        <Outlet />
+          <Outlet />
       </div>
     </div>
   );

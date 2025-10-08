@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { ThemeToggle } from "../components/common/ThemeToggle";
 import { useAuth, useLogout } from "../components/context/AuthContext";
+import { ErrorBoundaryWrapper } from "../components/common/ErrorBoundaryWrapper";
 
 const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
   `btn text-xl ${isActive ? "btn-primary" : "btn-ghost"}`;
@@ -30,9 +31,11 @@ export const Layout = () => {
           </div>
         </div>
 
-        <main className="px-4 max-w-7xl mx-auto p-8">
-          <Outlet />
-        </main>
+        <ErrorBoundaryWrapper>
+          <main className="px-4 max-w-7xl mx-auto p-8">
+            <Outlet />
+          </main>
+        </ErrorBoundaryWrapper>
       </div>
     </div>
   )
