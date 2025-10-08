@@ -8,10 +8,6 @@ import { Skeleton } from "../common/Skeleton";
 const QuotesPage = () => {
   const [quotes, setQuotes] = useState([] as QuoteItem[]);
 
-  if (Math.random() < 0.5) {
-    throw new Error('Trying out error boundary!')
-  }
-
   useEffect(() => {
     const fetchQuotes = async () => {
       try {

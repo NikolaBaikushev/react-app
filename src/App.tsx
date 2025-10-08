@@ -10,8 +10,9 @@ import { useGetProductsQuery } from './redux/api/api'
 import ProductsPage from './components/products/ProductPage'
 import { ErrorBoundaryWrapper } from './components/common/ErrorBoundaryWrapper'
 import { Suspense } from 'react'
+import ErrorTest from './components/common/ErrorTest'
 
-export const NotFound = () => <div className="text-center text-2xl text-red-500">404 - Page Not Found</div>;
+export const NotFoundPage = () => <div className="text-center text-2xl text-red-500">404 - Page Not Found</div>;
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
           </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="error" element={<ErrorTest />} />
       </Route>
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NotFoundPage/>}/>
     </Routes>
   )
 }

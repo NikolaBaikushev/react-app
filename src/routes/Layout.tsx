@@ -19,10 +19,14 @@ export const Layout = () => {
             <ThemeToggle></ThemeToggle>
             <NavLink to="/" className={getNavLinkClass}>Quotes</NavLink>
             <NavLink to="/products" className={getNavLinkClass}>Products</NavLink>
+
           </div>
           <div className="navbar-end flex-none space-x-2">
             {user
-              ? <><button className="btn btn-lg btn-ghost" onClick={logoutUser}>Logout</button></>
+              ? <>
+              <button className="btn btn-lg btn-ghost" onClick={logoutUser}>Logout</button>
+              <Link to="/error" className="btn btn-lg btn-outline btn-error">Error</Link>
+              </>
               : <>
                 <Link to="/login" className="btn btn-lg btn-ghost ">Login</Link>
                 <Link to="/register" className="btn btn-lg btn-ghost ">Register</Link>
