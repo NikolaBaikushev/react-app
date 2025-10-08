@@ -2,7 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URL } from '../../services/auth.service'
 
 export type ProductResponse = {
-  products: Product[]
+  products: Product[],
+  total: number,
+  limit: number,
+  skip: number,
 }
 
 export type Product = {
@@ -22,14 +25,21 @@ export const dummyjsonApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
-      query: () => 'products',
+      query: () => `products`,
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 5000))
         return response.products
+      },
+    }),
+    getProductsLimited: builder.query<ProductResponse, { limit: number, skip: number }>({
+      query: ({limit, skip}) => `products?limit=${limit}&skip=${skip}`,
+      transformResponse: async (response: ProductResponse) => {
+        await new Promise((resolve) => setTimeout(resolve, 5000))
+        return response
       },
     }),
   }),
 })
 
 
-export const { useGetProductsQuery } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery } = dummyjsonApi;
