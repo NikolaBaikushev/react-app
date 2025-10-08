@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes } from 'react-router'
+import { Route, Routes, useParams } from 'react-router'
 import Layout from './routes/Layout'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
@@ -14,6 +14,10 @@ import ErrorTest from './components/common/ErrorTest'
 import NotFoundPage from './components/common/NotFoundPage'
 
 
+const ProductDetailsPage = () => {
+  const params = useParams();
+  return <div><h1>Product Detail For {params.id}</h1></div>
+}
 function App() {
   return (
     <Routes>
@@ -21,6 +25,8 @@ function App() {
           <Route element={<Home />}>
             <Route index element={<QuotesPage />} />
             <Route path="products" element={<ProductsPage />} />
+            <Route path="products/:id" element={<ProductDetailsPage />} />
+
           </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
