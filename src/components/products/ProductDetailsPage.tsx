@@ -2,6 +2,7 @@ import { data, useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../redux/api/api";
 import { hasErrorData } from "../../guards/hasErrorData";
 import { useState } from "react";
+import { THEME_DARK, useTheme } from "../context/ThemeContext";
 
 type ProductDetailsPageParams = {
     readonly id: string,
@@ -10,6 +11,9 @@ type ProductDetailsPageParams = {
 const ProductDetailsPage = () => {
     const { id } = useParams<ProductDetailsPageParams>();
     const [isOpen, setIsOpen] = useState(false);
+    const [theme] = useTheme();
+
+    
 
     const { data: product, error, isLoading } = useGetProductQuery(Number(id!));
 
@@ -27,7 +31,7 @@ const ProductDetailsPage = () => {
     }
 
     const productCard = <>
-        <div className="card bg-base-100 shadow-sm  px-4">
+        <div className={`card ${theme === THEME_DARK ? 'bg-base-200': 'bg-base-100'} shadow-sm  px-4`}>
             <div className="grid lg:grid-cols-3 items-start">
 
                 {/* Images */}
@@ -67,10 +71,10 @@ const ProductDetailsPage = () => {
 
                     <div tabIndex={0}
 
-                        className={`collapse collapse-arrow border border-accent-content bg-base-100 rounded-box  ${isOpen ? "collapse-open" : "collapse-close"
+                        className={`collapse collapse-arrow border border-accent-content cursor-pointer rounded-box  ${isOpen ? "collapse-open" : "collapse-close"
                             } px-1`}>
                         <input type="checkbox" checked={isOpen} onChange={() => setIsOpen((state) => !state)} />
-                        <div className="collapse-title text-lg font-medium">
+                        <div className="collapse-title text-lg font-medium ">
                             More Information
                         </div>
                         <div className="collapse-content">
@@ -91,16 +95,17 @@ const ProductDetailsPage = () => {
             </div>
 
             {/* Reviews Section */}
-            {/* <div className="mt-10">
+            {/* <div className="divider divider-accent "></div> */}
+            <div className="text-left mt-5">
                 <h3 className="text-2xl font-bold mb-4">Customer Reviews</h3>
                 {product?.reviews.length === 0 ? (
                     <p className="text-gray-500">No reviews yet.</p>
                 ) : (
                     <div className="space-y-4">
                         {product?.reviews.map((review, idx) => (
-                            <div key={idx} className="border p-4 rounded-lg">
+                            <div key={idx} className="">
                                 <div className="flex justify-between items-center">
-                                    <h4 className="font-semibold">{review.reviewerName}</h4>
+                                    <h4 className="text-accent font-semibold">{review.reviewerName}</h4>
                                     <div className="rating rating-sm">
                                         {Array.from({ length: 5 }).map((_, i) => (
                                             <input
@@ -119,7 +124,7 @@ const ProductDetailsPage = () => {
                         ))}
                     </div>
                 )}
-            </div> */}
+            </div>
         </div>
 
     </>
