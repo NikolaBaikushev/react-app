@@ -38,8 +38,11 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
+    getProduct: builder.query<Product,  number>({
+      query: (id: number) => `products/${id}`
+    }),
   }),
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductQuery } = dummyjsonApi;
