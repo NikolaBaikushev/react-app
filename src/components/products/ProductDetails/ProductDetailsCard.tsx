@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { hasErrorData } from "../../../guards/hasErrorData";
 import { useGetProductQuery, type Product, type ProductReview } from "../../../redux/api/api";
 import { useTheme, THEME_DARK } from "../../context/ThemeContext";
-import { ProductDetailsCardImages, ProductDetailsMoreInformation, ProductDetailsReviews, ProductRating } from "./ProductDetailsCardParts";
+import { ProductDetailsCardImages, ProductDetailsMoreInformation, ProductDetailsReviews, ProductRating } from "./ProductDetailsCardComponents";
 
 
 export const ProductDetailsCard = ({ product }: { product: Product }) => {

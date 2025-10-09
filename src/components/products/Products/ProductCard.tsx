@@ -3,7 +3,7 @@ import type { Product } from "../../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
 import { THEME_DARK, THEME_LIGHT, useTheme } from "../../context/ThemeContext";
-import { ProductRating } from "../ProductDetails/ProductDetailsCardParts";
+import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
 
 type ProductCardProps = {
     product: Product
