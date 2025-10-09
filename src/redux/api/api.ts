@@ -17,7 +17,36 @@ export type Product = {
   rating: number,
   stock: number,
   thumbnail: string,
-  tags: string[]
+  tags: string[],
+
+  images: string[],
+  returnPolicy: string,
+  reviews: ProductReview[],
+  warrantyInformation: string,
+  shippingInformation: string,
+  
+availabilityStatus: string,
+  brand: string,
+  sku: string,
+  weight: number,
+  dimensions: ProductDimensions,
+  minimumOrderQuantity: number,
+
+}
+
+type ProductDimensions = {
+  width: number,
+  height: number,
+  depth: number,
+}
+
+
+type ProductReview = {
+  rating: number,
+  comment: string,
+  date: string,
+  reviewerName: string,
+  reviewerEmail: string
 }
 
 export const dummyjsonApi = createApi({

@@ -15,7 +15,8 @@ import LazyComponentWrapper from './components/common/LazyComponentWrapper'
 import { delayImport } from './utils/helpers'
 
 
-const ProductDetailsPage = React.lazy(() => delayImport(4000, import('./components/products/ProductDetailsPage')));
+// const ProductDetailsPage = React.lazy(() => delayImport(4000, import('./components/products/ProductDetailsPage')));
+const ProductDetailsPage = React.lazy(() => import('./components/products/ProductDetailsPage'));
 
 function App() {
   return (
