@@ -23,7 +23,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         img_container_bg_base_class: theme === THEME_DARK && 'bg-base-300'
     }
 
-    return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class} rounded-2xl`}>
+    return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class}`}>
         <figure>
             <img
                 className={`object-center rounded-2xl ${themeClasses.img_container_bg_base_class}`}

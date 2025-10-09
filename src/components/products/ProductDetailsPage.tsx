@@ -13,33 +13,25 @@ const ProductDetailsPage = () => {
 
     const { data: product, error, isLoading } = useGetProductQuery(Number(id!));
 
-    // const productCard = <>
-
-    //     <div className="card lg:card-side bg-base-100 shadow-sm">
-    //         <figure className="hover-gallery max-w-60">
-    //             {product?.images.map(image =><img key={image} src={image}></img>)}
-    //         </figure>
-    //         <div className="card-body">
-    //             <h2 className="card-title">New album is released!</h2>
-    //             <p>Click the button to listen on Spotiwhy app.</p>
-    //             <div className="card-actions justify-end">
-    //                 <button className="btn btn-primary">Listen</button>
-    //             </div>
-    //         </div>
-    //     </div>
-
-    // </>
-
     const rating = product && Math.floor(product.rating);
+
+    let imagesHTML;
+    if (product && product.images.length > 1) {
+        imagesHTML = <figure className="col-span-1 max-w-full hover-gallery">
+            {product?.images.map(image => <img key={image} src={image}></img>)}
+        </figure>
+    } else if (product && product.images.length === 1) {
+        imagesHTML = <figure className="col-span-1 max-w-full">
+            <img src={product.images[0]}></img>
+        </figure>
+    }
 
     const productCard = <>
         <div className="card bg-base-100 shadow-sm  px-4">
             <div className="grid lg:grid-cols-3 items-start">
 
                 {/* Images */}
-                <figure className="col-span-1 max-w-full hover-gallery">
-                    {product?.images.map(image => <img key={image} src={image}></img>)}
-                </figure>
+                {imagesHTML}
 
                 {/* Main Details */}
                 <div className="space-y-5 col-span-2 pt-8 text-left">
@@ -75,8 +67,8 @@ const ProductDetailsPage = () => {
 
                     <div tabIndex={0}
 
-                        className={`collapse collapse-arrow border border-base-200 bg-base-100 rounded-box  ${isOpen ? "collapse-open" : "collapse-close"
-                            } px-2`}>
+                        className={`collapse collapse-arrow border border-accent-content bg-base-100 rounded-box  ${isOpen ? "collapse-open" : "collapse-close"
+                            } px-1`}>
                         <input type="checkbox" checked={isOpen} onChange={() => setIsOpen((state) => !state)} />
                         <div className="collapse-title text-lg font-medium">
                             More Information
