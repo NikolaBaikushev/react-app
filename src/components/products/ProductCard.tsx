@@ -3,6 +3,7 @@ import type { Product } from "../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toggleFavourite } from "../../redux/slices/products/productsSlice";
 import { THEME_DARK, THEME_LIGHT, useTheme } from "../context/ThemeContext";
+import { ProductRating } from "./ProductDetailsCard";
 
 type ProductCardProps = {
     product: Product
@@ -13,9 +14,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     const favouriteProducts = useAppSelector(state => state.products.favouriteProducts);
     const [theme] = useTheme();
     const navigate = useNavigate();
-
-    const rating: number = Math.floor(product.rating);
-
 
     const themeClasses = {
         card_container_bg_base_class: theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200',
@@ -45,16 +43,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 <p className="text-lg font-semibold mt-2">${product.price}</p>
 
                 <div className="flex justify-between items-center w-full">
-                    <div className="rating">
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            <div
-                                key={index}
-                                className="mask mask-star bg-orange-400"
-                                aria-label={`${index + 1} star`}
-                                aria-current={index + 1 === rating}
-                            ></div>
-                        ))}
-                    </div>
+                    <ProductRating rating={product.rating}/>
 
                     <div>
                         <button

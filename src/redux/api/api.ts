@@ -41,7 +41,7 @@ type ProductDimensions = {
 }
 
 
-type ProductReview = {
+export type ProductReview = {
   rating: number,
   comment: string,
   date: string,

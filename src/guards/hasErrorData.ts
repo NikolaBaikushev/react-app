@@ -2,7 +2,7 @@ import type { SerializedError } from "@reduxjs/toolkit";
 import type { FetchBaseQueryArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export function hasErrorData(
-  error: SerializedError | FetchBaseQueryError
+  error: SerializedError | FetchBaseQueryError | undefined
 ): error is FetchBaseQueryError & { data: { message: string } } {
   return (
     typeof error === 'object' &&
