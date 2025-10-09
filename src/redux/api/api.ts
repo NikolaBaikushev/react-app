@@ -68,8 +68,8 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
-    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues }>({
-      query: ({ limit, skip, sortBy, orderBy = 'asc' }) => {
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues, search: string}>({
+      query: ({ limit, skip, sortBy, orderBy = 'asc', search }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           skip: skip.toString(),
@@ -79,8 +79,14 @@ export const dummyjsonApi = createApi({
           params.append('sortBy', sortBy)
           params.append('order', orderBy);
         }
+        let base = `products?${params.toString()}`;
+        if (search) {
+          params.append('q', search);
+          base = `products/search?${params.toString()}`
+        }
+        console.log(base)
 
-        return `products?${params.toString()}`;
+        return base;
       },
       transformResponse: async (response: ProductResponse) => {
         await new Promise((resolve) => setTimeout(resolve, 500))

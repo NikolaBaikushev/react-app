@@ -9,13 +9,12 @@ export type ProductsSortState = {
 }
 
 const ProductsPage = () => {
-  // const [sortBy, setSortBy] = useState('');
-  // const [orderBy, setOrderBy] = useState('asc');
-
   const [sortState, setSortState] = useState({
     sortBy: '',
     orderBy: 'asc'
   } as ProductsSortState)
+
+  const [search, setSearch] = useState<string>('');
 
   const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortState((state) => ({
@@ -31,12 +30,18 @@ const ProductsPage = () => {
     }))
   }
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.currentTarget.value)
+  }
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
         <input
           type="text"
+          value={search}
+          onChange={handleSearchChange}
           placeholder="Search products..."
           className="input input-bordered w-full sm:max-w-xs"
         />
@@ -90,7 +95,7 @@ const ProductsPage = () => {
 
       </div>
 
-      <Products {...sortState} />
+      <Products {...sortState} search={search} />
     </div>
   );
 };

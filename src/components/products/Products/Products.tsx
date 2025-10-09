@@ -8,9 +8,9 @@ import type { ProductsSortState } from "../ProductPage";
 
 const LIMIT = 15;
 
-const Products = ({ sortBy, orderBy }: ProductsSortState) => {
+const Products = ({ sortBy, orderBy, search }: ProductsSortState & {search: string}) => {
     const [skip, setSkip] = useState(0);
-    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy });
+    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
 
 
@@ -23,7 +23,7 @@ const Products = ({ sortBy, orderBy }: ProductsSortState) => {
     useEffect(() => {
         setProducts([])
         setSkip(0)
-    }, [sortBy, orderBy])
+    }, [sortBy, orderBy, search])
 
     const hasMore = data && (products.length < data.total);
 
