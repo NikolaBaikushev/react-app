@@ -3,10 +3,10 @@ import Products from "./Products/Products";
 
 const ProductsPage = () => {
   const [sortBy, setSortBy] = useState('');
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('asc');
 
   const toggleSortOrder = () => {
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    setOrderBy((prev) => (prev === 'asc' ? 'desc' : 'asc'));
   };
 
   return (
@@ -41,9 +41,9 @@ const ProductsPage = () => {
                 borderColor: 'color-mix(in oklab, var(--color-base-content) 20%, #0000)'
               }}
               className="btn btn-square border-l-0 bg-base-100 join-item "
-              title={`Sort order: ${sortOrder === 'asc' ? 'Ascending' : 'Descending'}`}
+              title={`Sort order: ${orderBy === 'asc' ? 'Ascending' : 'Descending'}`}
             >
-              {sortOrder === 'asc' ? <svg
+              {orderBy === 'asc' ? <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 swap-on"
                 fill="none"
@@ -68,7 +68,7 @@ const ProductsPage = () => {
 
       </div>
 
-      <Products sortBy={sortBy} />
+      <Products sortBy={sortBy} orderBy={orderBy}/>
     </div>
   );
 };

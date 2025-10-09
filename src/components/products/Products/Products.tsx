@@ -7,9 +7,9 @@ import { ProductCard } from "./ProductCard";
 
 const LIMIT = 15;
 
-const Products = ({sortBy}: {sortBy?: string}) => {
+const Products = ({sortBy, orderBy}: {sortBy?: string, orderBy?: string}) => {
     const [skip, setSkip] = useState(0);
-    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy });
+    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
 
     
@@ -22,7 +22,7 @@ const Products = ({sortBy}: {sortBy?: string}) => {
     useEffect(() => {
         setProducts([])
         setSkip(0)
-    },[sortBy])
+    },[sortBy, orderBy])
 
     const hasMore = data && (products.length < data.total);
 

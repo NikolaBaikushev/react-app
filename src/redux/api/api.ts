@@ -67,8 +67,8 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
-    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, order?: 'asc' | 'desc' }>({
-      query: ({ limit, skip, sortBy, order = 'asc' }) => {
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, orderBy?: string }>({
+      query: ({ limit, skip, sortBy, orderBy = 'asc' }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
           skip: skip.toString(),
@@ -76,7 +76,7 @@ export const dummyjsonApi = createApi({
 
         if (sortBy) {
           params.append('sortBy', sortBy)
-          params.append('order', order);
+          params.append('order', orderBy);
         }
 
         return `products?${params.toString()}`;
