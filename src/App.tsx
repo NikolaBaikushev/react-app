@@ -12,27 +12,29 @@ import { ErrorBoundaryWrapper } from './components/common/ErrorBoundaryWrapper'
 import { Suspense } from 'react'
 import ErrorTest from './components/common/ErrorTest'
 import NotFoundPage from './components/common/NotFoundPage'
+import React from 'react'
 
+const ProductDetailsPage = React.lazy(() => import('../src/components/products/ProductDetailsPage'))
 
-const ProductDetailsPage = () => {
-  const params = useParams();
-  return <div><h1>Product Detail For {params.id}</h1></div>
-}
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-          <Route element={<Home />}>
-            <Route index element={<QuotesPage />} />
-            <Route path="products" element={<ProductsPage />} />
-            <Route path="products/:id" element={<ProductDetailsPage />} />
+        <Route element={<Home />}>
+          <Route index element={<QuotesPage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:id" element={
+            <Suspense fallback={<div><h1>LOADING DETAULS ...</h1></div>}>
+              <ProductDetailsPage />
+            </Suspense>
+          } />
 
-          </Route>
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="error" element={<ErrorTest />} />
       </Route>
-      <Route path="*" element={<NotFoundPage/>}/>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }
