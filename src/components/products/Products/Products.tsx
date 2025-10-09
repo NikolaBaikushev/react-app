@@ -4,7 +4,7 @@ import { Skeleton } from "../../common/Skeleton";
 import SkeletonCard from "../../common/SkeletonCard";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
-import type { ProductsSortState } from "../ProductPage";
+import type { ProductsSortState } from "../../hooks/useProductsPageFilters";
 
 const LIMIT = 15;
 

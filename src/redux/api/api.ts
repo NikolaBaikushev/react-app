@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URL } from '../../services/auth.service'
-import type { OrderByValues, SortByValues } from '../../components/products/ProductPage'
+import type { OrderByValues, SortByValues } from '../../components/hooks/useProductsPageFilters'
 
 export type ProductResponse = {
   products: Product[],
@@ -84,7 +84,6 @@ export const dummyjsonApi = createApi({
           params.append('q', search);
           base = `products/search?${params.toString()}`
         }
-        console.log(base)
 
         return base;
       },

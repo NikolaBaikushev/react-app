@@ -1,38 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Products from "./Products/Products";
-
-export type SortByValues = 'title' | 'price' | '';
-export type OrderByValues = 'asc' | 'desc';
-export type ProductsSortState = {
-  sortBy: SortByValues,
-  orderBy: OrderByValues
-}
+import useProductsPageFilters from "../hooks/useProductsPageFilters";
 
 const ProductsPage = () => {
-  const [sortState, setSortState] = useState({
-    sortBy: '',
-    orderBy: 'asc'
-  } as ProductsSortState)
-
-  const [search, setSearch] = useState<string>('');
-
-  const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortState((state) => ({
-      ...state,
-      sortBy: e.target.value as SortByValues
-    }))
-  }
-
-  const handleToggleOrderByChange = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setSortState((state) => ({
-      ...state,
-      orderBy: state.orderBy === 'asc' ? 'desc' : 'asc' as OrderByValues
-    }))
-  }
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value)
-  }
+  const { sortState, search, debouncedSearch, handleSortByChange, handleToggleOrderByChange, handleSearchChange } = useProductsPageFilters();
 
   return (
     <div className="p-6 space-y-6">
@@ -55,14 +26,14 @@ const ProductsPage = () => {
           <div className="join w-full">
             <select className="join-item select border-r-0 select-bordered w-full"  // full width inside join
               value={sortState.sortBy}
-              onChange={(e) => handleSortByChange(e)}
+              onChange={handleSortByChange}
             >
               <option value="">Sort by</option>
               <option value="title">Name</option>
               <option value="price">Price</option>
             </select>
             <button
-              onClick={(e) => handleToggleOrderByChange(e)}
+              onClick={handleToggleOrderByChange}
               disabled={sortState.sortBy === ''}
               style={{
                 borderColor: 'color-mix(in oklab, var(--color-base-content) 20%, #0000)'
@@ -92,10 +63,8 @@ const ProductsPage = () => {
           </div>
         </div>
 
-
       </div>
-
-      <Products {...sortState} search={search} />
+      <Products {...sortState} search={debouncedSearch} />
     </div>
   );
 };
