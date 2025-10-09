@@ -24,8 +24,8 @@ export type Product = {
   reviews: ProductReview[],
   warrantyInformation: string,
   shippingInformation: string,
-  
-availabilityStatus: string,
+
+  availabilityStatus: string,
   brand: string,
   sku: string,
   weight: number,
@@ -61,26 +61,32 @@ export const dummyjsonApi = createApi({
       },
     }),
     getProductsLimited: builder.query<ProductResponse, { limit: number, skip: number }>({
-      query: ({limit, skip}) => `products?limit=${limit}&skip=${skip}`,
+      query: ({ limit, skip }) => `products?limit=${limit}&skip=${skip}`,
       transformResponse: async (response: ProductResponse) => {
         await new Promise((resolve) => setTimeout(resolve, 500))
         return response
       },
     }),
-    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, order?: 'asc' | 'desc'}>({
-      query: ({limit, skip, sortBy, order}) => {
-        let base = `products?limit=${limit}&skip=${skip}`;
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, order?: 'asc' | 'desc' }>({
+      query: ({ limit, skip, sortBy, order = 'asc' }) => {
+        const params = new URLSearchParams({
+          limit: limit.toString(),
+          skip: skip.toString(),
+        })
+
         if (sortBy) {
-          base += `&sortBy=${sortBy}&order=${order}`
+          params.append('sortBy', sortBy)
+          params.append('order', order);
         }
-        return base;
+
+        return `products?${params.toString()}`;
       },
       transformResponse: async (response: ProductResponse) => {
         await new Promise((resolve) => setTimeout(resolve, 500))
         return response
       },
     }),
-    getProduct: builder.query<Product,  number>({
+    getProduct: builder.query<Product, number>({
       query: (id: number) => `products/${id}`
     }),
   }),

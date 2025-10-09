@@ -9,8 +9,7 @@ const LIMIT = 15;
 
 const Products = ({sortBy}: {sortBy?: string}) => {
     const [skip, setSkip] = useState(0);
-    // const { data, error, isLoading, isFetching } = useGetProductsLimitedQuery({ limit: LIMIT, skip: skip });
-    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, order: 'asc' });
+    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
 
     
