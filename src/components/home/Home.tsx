@@ -9,7 +9,7 @@ export const Home = () => {
   if (!user) return <Navigate to="/login" />;
 
   return (
-    <div className="text-center py-20">
+    <div className="text-center py-5">
       <h1 className="text-3xl font-bold">
         Welcome, <span className="text-emerald-500">{user.username}</span>!
       </h1>

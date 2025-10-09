@@ -67,6 +67,19 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, order?: 'asc' | 'desc'}>({
+      query: ({limit, skip, sortBy, order}) => {
+        let base = `products?limit=${limit}&skip=${skip}`;
+        if (sortBy) {
+          base += `&sortBy=${sortBy}&order=${order}`
+        }
+        return base;
+      },
+      transformResponse: async (response: ProductResponse) => {
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        return response
+      },
+    }),
     getProduct: builder.query<Product,  number>({
       query: (id: number) => `products/${id}`
     }),
@@ -74,4 +87,4 @@ export const dummyjsonApi = createApi({
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductQuery } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery } = dummyjsonApi;
