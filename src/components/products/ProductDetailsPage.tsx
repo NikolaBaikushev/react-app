@@ -1,7 +1,7 @@
 import { data, useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../redux/api/api";
 import { hasErrorData } from "../../guards/hasErrorData";
-import ProductDetailsCard from "./ProductDetailsCard";
+import ProductDetailsCard from "./ProductDetails/ProductDetailsCard";
 
 type ProductDetailsPageParams = {
     readonly id: string,

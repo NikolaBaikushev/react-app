@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useInsertionEffect, useRef, useState } from "react";
-import { useGetProductsLimitedQuery, useGetProductsQuery } from "../../redux/api/api";
-import { Skeleton } from "../common/Skeleton";
-import SkeletonCard from "../common/SkeletonCard";
+import { useGetProductsLimitedQuery, useGetProductsQuery } from "../../../redux/api/api";
+import { Skeleton } from "../../common/Skeleton";
+import SkeletonCard from "../../common/SkeletonCard";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
-import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
 const LIMIT = 15;
 

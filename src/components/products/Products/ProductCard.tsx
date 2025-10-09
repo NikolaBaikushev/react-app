@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import type { Product } from "../../redux/api/api"
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { toggleFavourite } from "../../redux/slices/products/productsSlice";
-import { THEME_DARK, THEME_LIGHT, useTheme } from "../context/ThemeContext";
-import { ProductRating } from "./ProductDetailsCard";
+import type { Product } from "../../../redux/api/api"
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
+import { THEME_DARK, THEME_LIGHT, useTheme } from "../../context/ThemeContext";
+import { ProductRating } from "../ProductDetails/ProductDetailsCardParts";
 
 type ProductCardProps = {
     product: Product
