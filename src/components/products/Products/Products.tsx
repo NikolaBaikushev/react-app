@@ -4,15 +4,16 @@ import { Skeleton } from "../../common/Skeleton";
 import SkeletonCard from "../../common/SkeletonCard";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
+import type { ProductsSortState } from "../ProductPage";
 
 const LIMIT = 15;
 
-const Products = ({sortBy, orderBy}: {sortBy?: string, orderBy?: string}) => {
+const Products = ({ sortBy, orderBy }: ProductsSortState) => {
     const [skip, setSkip] = useState(0);
     const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
 
-    
+
     useEffect(() => {
         if (data?.products?.length) {
             setProducts(prev => [...prev, ...data?.products]);
@@ -22,7 +23,7 @@ const Products = ({sortBy, orderBy}: {sortBy?: string, orderBy?: string}) => {
     useEffect(() => {
         setProducts([])
         setSkip(0)
-    },[sortBy, orderBy])
+    }, [sortBy, orderBy])
 
     const hasMore = data && (products.length < data.total);
 
@@ -47,7 +48,7 @@ const Products = ({sortBy, orderBy}: {sortBy?: string, orderBy?: string}) => {
                 <Skeleton length={LIMIT} container="div" className="mt-5 grid grid-cols-3 gap-10 items-center w-full" />
             </>}
 
-            { hasMore && !isFetching && <div ref={sentinelRef} style={{ height: '1px' }} />}
+            {hasMore && !isFetching && <div ref={sentinelRef} style={{ height: '1px' }} />}
         </>
     )
 

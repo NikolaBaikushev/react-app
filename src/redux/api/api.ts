@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URL } from '../../services/auth.service'
+import type { OrderByValues, SortByValues } from '../../components/products/ProductPage'
 
 export type ProductResponse = {
   products: Product[],
@@ -67,7 +68,7 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
-    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: string, orderBy?: string }>({
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues }>({
       query: ({ limit, skip, sortBy, orderBy = 'asc' }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),

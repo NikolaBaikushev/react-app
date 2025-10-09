@@ -1,13 +1,35 @@
 import { useState } from "react";
 import Products from "./Products/Products";
 
-const ProductsPage = () => {
-  const [sortBy, setSortBy] = useState('');
-  const [orderBy, setOrderBy] = useState('asc');
+export type SortByValues = 'title' | 'price' | '';
+export type OrderByValues = 'asc' | 'desc';
+export type ProductsSortState = {
+  sortBy: SortByValues,
+  orderBy: OrderByValues
+}
 
-  const toggleSortOrder = () => {
-    setOrderBy((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-  };
+const ProductsPage = () => {
+  // const [sortBy, setSortBy] = useState('');
+  // const [orderBy, setOrderBy] = useState('asc');
+
+  const [sortState, setSortState] = useState({
+    sortBy: '',
+    orderBy: 'asc'
+  } as ProductsSortState)
+
+  const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortState((state) => ({
+      ...state,
+      sortBy: e.target.value as SortByValues
+    }))
+  }
+
+  const handleToggleOrderByChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setSortState((state) => ({
+      ...state,
+      orderBy: state.orderBy === 'asc' ? 'desc' : 'asc' as OrderByValues
+    }))
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -27,23 +49,23 @@ const ProductsPage = () => {
         <div className="w-full sm:max-w-xs">
           <div className="join w-full">
             <select className="join-item select border-r-0 select-bordered w-full"  // full width inside join
-              value={sortBy}
-              onChange={(e) => setSortBy(e.currentTarget.value)}
+              value={sortState.sortBy}
+              onChange={(e) => handleSortByChange(e)}
             >
               <option value="">Sort by</option>
               <option value="title">Name</option>
               <option value="price">Price</option>
             </select>
             <button
-              onClick={toggleSortOrder}
-              disabled={!sortBy}
+              onClick={(e) => handleToggleOrderByChange(e)}
+              disabled={sortState.sortBy === ''}
               style={{
                 borderColor: 'color-mix(in oklab, var(--color-base-content) 20%, #0000)'
               }}
               className="btn btn-square border-l-0 bg-base-100 join-item "
-              title={`Sort order: ${orderBy === 'asc' ? 'Ascending' : 'Descending'}`}
+              title={`Sort order: ${sortState.orderBy === 'asc' ? 'Ascending' : 'Descending'}`}
             >
-              {orderBy === 'asc' ? <svg
+              {sortState.orderBy === 'asc' ? <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 swap-on"
                 fill="none"
@@ -68,7 +90,7 @@ const ProductsPage = () => {
 
       </div>
 
-      <Products sortBy={sortBy} orderBy={orderBy}/>
+      <Products {...sortState} />
     </div>
   );
 };
