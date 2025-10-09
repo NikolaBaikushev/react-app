@@ -1,14 +1,42 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useEffectEvent, useImperativeHandle, useRef, useState } from "react";
 import Products from "./Products/Products";
 import useProductsPageFilters from "../hooks/useProductsPageFilters";
+import CreateProductModal from "./CreateProductModal/CreateProductModal";
+
+
+const Toast = (toast: {message: string}) => {
+  return <>
+   <div className="toast toast-end toast-top sm:toast-end sm:toast-bottom w-xs sm:w-lg sm:animate-bounce sm:duration-500 z-50 ">
+          <div className="alert alert-success min-w-fit">
+            <span className="text-base">{toast.message}</span>
+          </div>
+        </div>
+  </>
+}
 
 const ProductsPage = () => {
   const { sortState, search, debouncedSearch, handleSortByChange, handleToggleOrderByChange, handleSearchChange } = useProductsPageFilters();
+  const modalRef = useRef<{ open: () => void, toast: { message: string } }>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setToast(null)
+    }, 5000);
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [toast])
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
+    <div className="p-6 space-y-6">
+      {toast && <>
+        <Toast {...toast!}>
+        </Toast>
+      </>}
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <input
           type="text"
           value={search}
@@ -17,10 +45,12 @@ const ProductsPage = () => {
           className="input input-bordered w-full sm:max-w-xs"
         />
 
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() => modalRef.current?.open()}
+        >
           Create Product
         </button>
 
+        <CreateProductModal ref={modalRef} setToast={setToast} />
 
         <div className="w-full sm:max-w-xs">
           <div className="join w-full">

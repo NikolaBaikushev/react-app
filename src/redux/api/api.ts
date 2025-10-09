@@ -95,8 +95,15 @@ export const dummyjsonApi = createApi({
     getProduct: builder.query<Product, number>({
       query: (id: number) => `products/${id}`
     }),
+    addProduct: builder.mutation<Product, Partial<Product>>({
+      query: ({title, price}) => ({
+        url: `products/add`,
+        method: 'POST',
+        body: JSON.stringify({title, price})
+      })
+    })
   }),
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation } = dummyjsonApi;
