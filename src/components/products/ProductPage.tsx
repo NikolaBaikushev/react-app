@@ -1,22 +1,12 @@
-import { forwardRef, useEffect, useEffectEvent, useImperativeHandle, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Products from "./Products/Products";
 import useProductsPageFilters from "../hooks/useProductsPageFilters";
 import CreateProductModal from "./CreateProductModal/CreateProductModal";
-
-
-const Toast = (toast: {message: string}) => {
-  return <>
-   <div className="toast toast-end toast-top sm:toast-end sm:toast-bottom w-xs sm:w-lg sm:animate-bounce sm:duration-500 z-50 ">
-          <div className="alert alert-success min-w-fit">
-            <span className="text-base">{toast.message}</span>
-          </div>
-        </div>
-  </>
-}
+import Toast from "../common/Toast";
 
 const ProductsPage = () => {
   const { sortState, search, debouncedSearch, handleSortByChange, handleToggleOrderByChange, handleSearchChange } = useProductsPageFilters();
-  const modalRef = useRef<{ open: () => void, toast: { message: string } }>(null);
+  const modalRef = useRef<{ openModal: () => void }>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
@@ -45,7 +35,7 @@ const ProductsPage = () => {
           className="input input-bordered w-full sm:max-w-xs"
         />
 
-        <button className="btn btn-primary" onClick={() => modalRef.current?.open()}
+        <button className="btn btn-primary" onClick={() => modalRef.current?.openModal()}
         >
           Create Product
         </button>
