@@ -1,10 +1,9 @@
 const ProductDetailsPageFallback = () => {
 
-    return <div className="bg-white rounded-lg shadow-md animate-pulse">
-
+    return (
+    <div className="bg-white rounded-lg shadow-md animate-pulse">
         <div className="flex gap-8 p-6 ">
             <div className="w-64 h-100 bg-base-200 rounded-md"></div>
-
             <div className="flex-1 h-120 space-y-5">
                 <div className="space-y-3">
                     <div className="h-8 bg-base-200 rounded w-full"></div>
@@ -24,10 +23,7 @@ const ProductDetailsPageFallback = () => {
 
                 <div className="mt-6 h-10 bg-base-200 w-full rounded-full"></div>
             </div>
-
         </div>
-
-
-    </div>
+    </div>)
 }
 export default ProductDetailsPageFallback;
