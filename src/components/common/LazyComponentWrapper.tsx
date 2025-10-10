@@ -2,7 +2,7 @@ import { Suspense } from "react"
 
 type LazyWrapperProps = {
     children: React.ReactElement,
-    fallback: React.ReactElement
+    fallback: React.ReactElement,
 }
 
 const LazyComponentWrapper = ({ children, fallback }: LazyWrapperProps) => {

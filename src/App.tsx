@@ -10,10 +10,11 @@ import ErrorTest from './components/common/ErrorTest'
 import NotFoundPage from './components/common/NotFoundPage'
 import React from 'react'
 import LazyComponentWrapper from './components/common/LazyComponentWrapper'
+import { delayImport } from './utils/helpers'
+import ProductDetailsPageFallback from './components/products/ProductDetailsPageFallback'
 
 
-// const ProductDetailsPage = React.lazy(() => delayImport(4000, import('./components/products/ProductDetailsPage')));
-const ProductDetailsPage = React.lazy(() => import('./components/products/ProductDetailsPage'));
+const ProductDetailsPage = React.lazy(() => delayImport(3000, import('./components/products/ProductDetailsPage')));
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route index element={<QuotesPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="products/:id" element={
-            <LazyComponentWrapper fallback={<div><h1>LOADING DETAILS ...</h1></div>}>
+            <LazyComponentWrapper fallback={<ProductDetailsPageFallback/>}>
               <ProductDetailsPage />
             </LazyComponentWrapper>
           } />
