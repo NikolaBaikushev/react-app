@@ -3,27 +3,20 @@ import Products from "./Products/Products";
 import useProductsPageFilters from "../hooks/useProductsPageFilters";
 import CreateProductModal from "./CreateProductModal/CreateProductModal";
 import Toast from "../common/Toast";
+import { useAppSelector } from "../../redux/hooks";
+import useToast from "../hooks/useToast";
 
 const ProductsPage = () => {
   const { sortState, search, debouncedSearch, handleSortByChange, handleToggleOrderByChange, handleSearchChange } = useProductsPageFilters();
   const modalRef = useRef<{ openModal: () => void }>(null);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setToast(null)
-    }, 5000);
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [toast])
 
   return (
 
     <div className="p-6 space-y-6">
       {toast && <>
-        <Toast {...toast!}>
-        </Toast>
+        <Toast />
       </>}
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -40,7 +33,7 @@ const ProductsPage = () => {
           Create Product
         </button>
 
-        <CreateProductModal ref={modalRef} setToast={setToast} />
+        <CreateProductModal ref={modalRef} />
 
         <div className="w-full sm:max-w-xs">
           <div className="join w-full">

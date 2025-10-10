@@ -1,12 +1,13 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import { useAddProductMutation } from "../../../redux/api/api";
+import useToast from "../../hooks/useToast";
+import { ToastType } from "../../../redux/slices/toast/toastSlice";
 interface CreateProductModalProps {
-    setToast: React.Dispatch<React.SetStateAction<{ message: string, type: 'error' | 'success' } | null>>;
 }
 
-
-const CreateProductModal = forwardRef(({ setToast }: CreateProductModalProps, ref) => {
+const CreateProductModal = forwardRef((props: CreateProductModalProps, ref) => {
     const [addProduct, result] = useAddProductMutation()
+    const { setToast } = useToast();
 
     const dialogRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
@@ -33,11 +34,11 @@ const CreateProductModal = forwardRef(({ setToast }: CreateProductModalProps, re
 
         const res = await addProduct({ title: name, price });
         if ('data' in res) {
-            setToast({ message: `Created successfully with id ${res.data?.id}.`, type: 'success' });
+            setToast(`Created successfully with id ${res.data?.id}.`, ToastType.SUCCESS);
             closeModal();
             formRef.current?.reset();
         } else {
-            setToast({ message: 'Error creating product', type: 'error' });
+            setToast('Error creating product', ToastType.ERROR);
         }
     }
 
