@@ -1,5 +1,5 @@
 import type { SerializedError } from "@reduxjs/toolkit";
-import type { FetchBaseQueryArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 export function hasErrorData(
   error: SerializedError | FetchBaseQueryError | undefined

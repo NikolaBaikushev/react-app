@@ -1,4 +1,4 @@
-import type { QuoteItem, QuotesResponse } from "../types/quotes/quotes";
+import type { QuotesResponse } from "../types/quotes/quotes";
 import { API_BASE_URL } from "./auth.service"
 
 export const getAllQuotes = async (): Promise<QuotesResponse> => {

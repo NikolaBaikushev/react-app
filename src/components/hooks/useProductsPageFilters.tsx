@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDebounce } from "./useDebounce";
 
 export type SortByValues = 'title' | 'price' | '';

@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useEffectEvent, useInsertionEffect, useRef, useState } from "react";
-import { useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductsQuery } from "../../../redux/api/api";
+import { useCallback, useEffect, useState } from "react";
+import { useGetProductsLimitedSortQuery } from "../../../redux/api/api";
 import { Skeleton } from "../../common/Skeleton";
-import SkeletonCard from "../../common/SkeletonCard";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
 import type { ProductsSortState } from "../../hooks/useProductsPageFilters";

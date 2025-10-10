@@ -1,4 +1,4 @@
-import { data, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../redux/api/api";
 import { hasErrorData } from "../../guards/hasErrorData";
 import ProductDetailsCard from "./ProductDetails/ProductDetailsCard";
