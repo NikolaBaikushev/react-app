@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# React Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This is a React application showcasing the usage of Context API and Redux with RTK and RTK Query.
 
-Currently, two official plugins are available:
+The application has two main data routes - **Quotes** and **Products**. The `/products` route is the more extensive one.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Application Details 
+#### Tech Stack
+- React + Vite + Redux + Redux Toolkit
+- TailwindCSS
+- DaisyUI 
+- Lucide Icons
 
-## Expanding the ESLint configuration
+#### APIs Used
+- [dummyjson.com](https://dummyjson.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### More Information
+The application consist of the following
+- Login
+- Register (not functional)
+- Quotes
+- Products
+- Theme Switch
+- Error Boundary 
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### Login
+The user should login with this credentials: 
+- username: **emilys**
+- password: **emilyspass**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+#### Quotes
+This page contains a list of Quotes from authors. A quote can be liked and the liked quotes are saved in Local Storage
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+#### Theme Switch
+The application has implemented theme switch for changing between *light* and *dark* theme. 
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Error Boundary
+The application has specific route for throwing error and showcasing the ErrorBoundary component.
+Also there is a dedicated NotFoundPage component when trying to access endpoint which doesn't exist in the routes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### Products
+This is the most extensive endpoint and functionality which has been implemented. 
+- It has Products where it loads the initial ammount limit of products and upon scrolling it loads the next batch of products. Thus creating ***infinite scroll*** behaviour. The products page has ***search***, ***sort*** and ***create product*** functionality.
+- Product can be ***liked*** and ***deleted***. 
+- If clicked on the product card it loads the *details page*. In there is more information for the product as well as reviews left by customers who have tried the product. The product could be updated via the pencil icon on the top right.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Additional Information
+Most of the pages have **Skeleton** type loading and therefore artificial delays on getting the data.
+After CRUD operations a **Toast** component is shown.
+Most of the pages are responsive.
