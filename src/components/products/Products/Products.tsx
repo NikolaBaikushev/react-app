@@ -10,7 +10,7 @@ const LIMIT = 15;
 
 const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: string }) => {
     const [skip, setSkip] = useState(0);
-    const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
+    const { data, error, isLoading, isFetching, refetch, } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: str
             :
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 items-stretch min-h-[80vh]">
 
-                {products?.map(product => <ProductCard key={product.id} product={product}></ProductCard>)}
+                {products?.map(product => <ProductCard key={product.id} product={product} refetch={refetch}></ProductCard>)}
             </div>
         }
             {isFetching && <>

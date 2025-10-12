@@ -119,6 +119,12 @@ export const dummyjsonApi = createApi({
         body: JSON.stringify(body)
       })
     }),
+    deleteProduct: builder.mutation<Product & {isDeleted: boolean, deletedOn: string}, number>({
+      query: (id) => ({
+        url: `products/${id}`,
+        method: 'DELETE',
+      })
+    }),
     getProductsCategories: builder.query<Omit<ProductCategory, 'url'>[], void>({
       query: () => `products/categories`,
       transformResponse: async (response: ProductCategoriesResponse) => {
@@ -134,4 +140,4 @@ export const dummyjsonApi = createApi({
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery, useUpdateProductMutation} = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery, useUpdateProductMutation, useDeleteProductMutation} = dummyjsonApi;
