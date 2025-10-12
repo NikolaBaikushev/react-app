@@ -20,7 +20,7 @@ const ToastComponent = () => {
     
     return <>
         <div className="toast toast-end toast-top sm:toast-end sm:toast-bottom w-xs sm:w-lg sm:animate-bounce sm:duration-500 z-50 ">
-            <div className="alert alert-success min-w-fit">
+            <div className={`alert alert-${toast.type} min-w-fit`}>
                 <span className="text-base">{toast.message}</span>
             </div>
         </div>

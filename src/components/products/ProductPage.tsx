@@ -2,23 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import Products from "./Products/Products";
 import useProductsPageFilters from "../hooks/useProductsPageFilters";
 import CreateProductModal from "./CreateProductModal/CreateProductModal";
-import Toast from "../common/Toast";
-import { useAppSelector } from "../../redux/hooks";
-import useToast from "../hooks/useToast";
 
 const ProductsPage = () => {
   const { sortState, search, debouncedSearch, handleSortByChange, handleToggleOrderByChange, handleSearchChange } = useProductsPageFilters();
   const modalRef = useRef<{ openModal: () => void }>(null);
-  const { toast } = useToast();
 
 
   return (
-
     <div className="p-6 space-y-6">
-      {toast && <>
-        <Toast />
-      </>}
-
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <input
           type="text"
