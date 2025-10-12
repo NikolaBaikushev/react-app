@@ -2,12 +2,20 @@ import { Pencil } from "lucide-react";
 import { type Product } from "../../../redux/api/api";
 import { ProductDetailsCardImages, ProductDetailsMoreInformation, ProductDetailsReviews, ProductRating } from "./ProductDetailsCardComponents";
 import { useTheme } from "../../context/ThemeContext";
+import { useRef } from "react";
+import type { UpdateProductModalHandle } from "../UpdateProductModal/UpdateProductModal";
+import UpdateProductModal from "../UpdateProductModal/UpdateProductModal";
 
 
 export const ProductDetailsCard = ({ product }: { product: Product }) => {
     const { isCurrentThemeLight } = useTheme();
+    const modalRef = useRef<UpdateProductModalHandle>(null)
+
 
     return (<>
+        <UpdateProductModal product={product} ref={modalRef} />
+
+
         <div className={`card ${isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200'} shadow-sm  px-4`}>
             <div className="grid lg:grid-cols-3 items-start">
 
@@ -23,7 +31,7 @@ export const ProductDetailsCard = ({ product }: { product: Product }) => {
                             <h2 className="text-4xl font-bold">{product.title}</h2>
                             <p className="text-sm text-gray-500">{product.brand} | SKU: {product.sku}</p>
                         </div>
-                        <button className={`btn btn-lg border ${isCurrentThemeLight ? 'border-primary hover:bg-base-200' : 'border-secondary hover:bg-base-300'} bg-base-100  text-right btn-circle`}>
+                        <button onClick={modalRef.current?.openModal} className={`btn btn-lg border ${isCurrentThemeLight ? 'border-primary hover:bg-base-200' : 'border-secondary hover:bg-base-300'} bg-base-100  text-right btn-circle`}>
                             <Pencil size={22} />
                         </button>
                     </div>

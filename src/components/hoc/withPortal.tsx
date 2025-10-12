@@ -1,12 +1,12 @@
 
-import React, { type JSX } from 'react';
 import { createPortal } from 'react-dom';
+import type { WithComponentProps } from '../../types/common/withComponentProps';
 
-function withPortal<P extends JSX.IntrinsicAttributes>(
-    WrappedComponent: React.ComponentType<P>,
+function withPortal<P>(
+    WrappedComponent: React.ComponentType<WithComponentProps<P>>,
     portalId: string
 ) {
-    return (props: P) => {
+    return (props: WithComponentProps<P>) => {
         const portalRoot = document.getElementById(portalId);
         if (!portalRoot) return null;
         

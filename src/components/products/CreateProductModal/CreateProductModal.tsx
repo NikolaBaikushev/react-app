@@ -2,10 +2,8 @@ import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import { useAddProductMutation } from "../../../redux/api/api";
 import useToast from "../../hooks/useToast";
 import { ToastType } from "../../../redux/slices/toast/toastSlice";
-interface CreateProductModalProps {
-}
 
-const CreateProductModal = forwardRef((props: CreateProductModalProps, ref) => {
+const CreateProductModal = forwardRef((_, ref) => {
     const [addProduct, result] = useAddProductMutation()
     const { setToast } = useToast();
 

@@ -2,10 +2,7 @@ import { useEffect, type JSX } from "react"
 import withPortal from "../hoc/withPortal.tsx"
 import useToast from "../hooks/useToast"
 
-type ToastProps = {
-} & JSX.IntrinsicAttributes;
-
-const ToastComponent = (props: ToastProps) => {
+const ToastComponent = () => {
     const { toast, clearToast } = useToast();
 
     useEffect(() => {
