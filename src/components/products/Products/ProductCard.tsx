@@ -3,23 +3,27 @@ import { useDeleteProductMutation, type Product } from "../../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
 import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
-import { useTheme } from "../../context/ThemeContext";
+import { Themes, useTheme } from "../../context/ThemeContext";
 import { Heart, Trash, Trash2, Trash2Icon } from "lucide-react";
 import useToast from "../../hooks/useToast";
 import { ToastType } from "../../../redux/slices/toast/toastSlice";
+import { useRef, type MouseEvent } from "react";
+import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
+import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 
 type ProductCardProps = {
     product: Product,
     refetch: () => void;
 };
 
+
 export const ProductCard = ({ product, refetch }: ProductCardProps) => {
     const dispatch = useAppDispatch();
     const favouriteProducts = useAppSelector(state => state.products.favouriteProducts);
     const { isCurrentThemeLight } = useTheme();
     const navigate = useNavigate();
-    const [deleteProduct] = useDeleteProductMutation();
-    const { setToast } = useToast();
+
+    const deleteModalRef = useRef<ModalImperativeHandle>(null)
 
     const themeClasses = {
         card_container_bg_base_class: isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200',
@@ -29,23 +33,18 @@ export const ProductCard = ({ product, refetch }: ProductCardProps) => {
 
     const toggleFavouriteProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
+
         dispatch(toggleFavourite(product.id))
     }
 
-    const handleDeleteProduct = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         e.stopPropagation();
-        const res = await deleteProduct(product.id);
-        console.log(res);
-        if ('data' in res) {
-            setToast(`Successfully deleted product with ID: ${res.data?.id}\n Deleted ON: ${res.data?.deletedOn}`, ToastType.SUCCESS)
-            // refetch();
-        } else {
-            setToast(`Error deleting product ${product.id}`, ToastType.ERROR)
-        }
+        deleteModalRef.current?.openModal()
     }
 
     return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class}`}>
-
+        <DeleteProductModal ref={deleteModalRef} product={product} onDeleteSuccess={refetch} />
         <figure>
             <img
                 className={`object-center rounded-2xl ${themeClasses.img_container_bg_base_class}`}
@@ -76,7 +75,7 @@ export const ProductCard = ({ product, refetch }: ProductCardProps) => {
                         >
                             <Heart size={18} />
                         </button>
-                        <button className="btn btn-circle btn-error text-right btn-outline" onClick={handleDeleteProduct}>
+                        <button className="btn btn-circle btn-error text-right btn-outline" onClick={handleOpenModal}>
                             <Trash2 size={18} />
                         </button>
                     </div>

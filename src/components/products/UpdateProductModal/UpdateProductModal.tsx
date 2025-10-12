@@ -4,18 +4,15 @@ import withPortal from "../../hoc/withPortal";
 import { CircleDollarSign, ClipboardList, ScrollText, Tag, TextAlignJustify } from "lucide-react";
 import useToast from "../../hooks/useToast";
 import { ToastType } from "../../../redux/slices/toast/toastSlice";
+import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 
 
-export type UpdateProductModalHandle = {
-    openModal: () => void;
-    closeModal: () => void;
-}
 
 type UpdateProductModalComponentProps = {
     product: Product
 }
 
-const UpdateProductModalComponent = forwardRef<UpdateProductModalHandle, UpdateProductModalComponentProps>(
+const UpdateProductModalComponent = forwardRef<ModalImperativeHandle, UpdateProductModalComponentProps>(
     ({ product }: UpdateProductModalComponentProps, ref) => {
         const dialogRef = useRef<HTMLDialogElement>(null);
         const formRef = useRef<HTMLFormElement>(null);
