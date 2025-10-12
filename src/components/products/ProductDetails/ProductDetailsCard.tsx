@@ -31,7 +31,7 @@ export const ProductDetailsCard = ({ product }: { product: Product }) => {
                             <h2 className="text-4xl font-bold">{product.title}</h2>
                             <p className="text-sm text-gray-500">{product.brand} | SKU: {product.sku}</p>
                         </div>
-                        <button onClick={modalRef.current?.openModal} className={`btn btn-lg border ${isCurrentThemeLight ? 'border-primary hover:bg-base-200' : 'border-secondary hover:bg-base-300'} bg-base-100  text-right btn-circle`}>
+                        <button onClick={() => modalRef.current?.openModal()} className={`btn btn-lg border ${isCurrentThemeLight ? 'border-primary hover:bg-base-200' : 'border-secondary hover:bg-base-300'} bg-base-100  text-right btn-circle`}>
                             <Pencil size={22} />
                         </button>
                     </div>

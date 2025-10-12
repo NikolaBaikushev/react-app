@@ -50,6 +50,14 @@ export type ProductReview = {
   reviewerEmail: string
 }
 
+type ProductCategory = {
+  slug: string,
+  name: string,
+  url: string
+}
+
+type ProductCategoriesResponse = ProductCategory[];
+
 export const dummyjsonApi = createApi({
   reducerPath: 'dummyjsonApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
@@ -68,7 +76,7 @@ export const dummyjsonApi = createApi({
         return response
       },
     }),
-    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues, search: string}>({
+    getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues, search: string }>({
       query: ({ limit, skip, sortBy, orderBy = 'asc', search }) => {
         const params = new URLSearchParams({
           limit: limit.toString(),
@@ -96,14 +104,23 @@ export const dummyjsonApi = createApi({
       query: (id: number) => `products/${id}`
     }),
     addProduct: builder.mutation<Product, Partial<Product>>({
-      query: ({title, price}) => ({
+      query: ({ title, price }) => ({
         url: `products/add`,
         method: 'POST',
-        body: JSON.stringify({title, price})
+        body: JSON.stringify({ title, price })
       })
-    })
+    }),
+    getProductsCategories: builder.query<Omit<ProductCategory, 'url'>[], void>({
+      query: () => `products/categories`,
+      transformResponse: (response: ProductCategoriesResponse) => {
+        return response.map((data: ProductCategory) => ({
+          name: data.name,
+          slug: data.slug
+        }))
+      }
+    }),
   }),
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery } = dummyjsonApi;
