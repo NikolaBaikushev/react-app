@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import type { Product } from "../../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
-import { THEME_DARK, THEME_LIGHT, useTheme } from "../../context/ThemeContext";
 import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
+import { useTheme } from "../../context/ThemeContext";
 
 type ProductCardProps = {
     product: Product
@@ -12,13 +12,13 @@ type ProductCardProps = {
 export const ProductCard = ({ product }: ProductCardProps) => {
     const dispatch = useAppDispatch();
     const favouriteProducts = useAppSelector(state => state.products.favouriteProducts);
-    const [theme] = useTheme();
+    const  { isCurrentThemeLight } = useTheme();
     const navigate = useNavigate();
 
     const themeClasses = {
-        card_container_bg_base_class: theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200',
-        card_container_clickable_bg_base_class: theme === THEME_LIGHT ? 'hover:bg-base-200' : 'hover:bg-neutral',
-        img_container_bg_base_class: theme === THEME_DARK && 'bg-base-300'
+        card_container_bg_base_class: isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200',
+        card_container_clickable_bg_base_class: isCurrentThemeLight ? 'hover:bg-base-200' : 'hover:bg-neutral',
+        img_container_bg_base_class: !isCurrentThemeLight && 'bg-base-300'
     }
 
     return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class}`}>

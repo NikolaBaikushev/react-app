@@ -1,10 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getLocalStorageItem, LocalStorageKeys, setLocalStorageItem } from "../../services/localStorage.service";
 
 export const THEME_LIGHT = "emptymist";
 export const THEME_DARK = "grumpyplanet";
 
-type ThemeContextType = [string, React.Dispatch<React.SetStateAction<string>>];
+type ThemeContextType = {
+  theme: string, 
+  setTheme: React.Dispatch<React.SetStateAction<string>>,
+  isCurrentThemeLight: boolean,
+};
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -20,8 +24,18 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setLocalStorageItem(LocalStorageKeys.THEME, theme);
   }, [theme]);
 
+  const isCurrentThemeLight = theme === THEME_LIGHT;
+
+  const context = useMemo(() => {
+    return {
+      theme,
+      setTheme,
+      isCurrentThemeLight
+    }
+  }, [theme])
+
   return (
-    <ThemeContext.Provider value={[theme, setTheme]}>
+    <ThemeContext.Provider value={context}>
       {children}
     </ThemeContext.Provider>
   );
@@ -30,5 +44,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) throw new Error("useTheme must be used within ThemeProvider");
+  
   return context;
 };

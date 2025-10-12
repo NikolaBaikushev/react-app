@@ -1,13 +1,14 @@
+import { Pencil } from "lucide-react";
 import { type Product } from "../../../redux/api/api";
-import { useTheme, THEME_DARK } from "../../context/ThemeContext";
 import { ProductDetailsCardImages, ProductDetailsMoreInformation, ProductDetailsReviews, ProductRating } from "./ProductDetailsCardComponents";
+import { useTheme } from "../../context/ThemeContext";
 
 
 export const ProductDetailsCard = ({ product }: { product: Product }) => {
-    const [theme] = useTheme();
+    const { isCurrentThemeLight } = useTheme();
 
     return (<>
-        <div className={`card ${theme === THEME_DARK ? 'bg-base-200' : 'bg-base-100'} shadow-sm  px-4`}>
+        <div className={`card ${isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200'} shadow-sm  px-4`}>
             <div className="grid lg:grid-cols-3 items-start">
 
                 {/* Images */}
@@ -16,9 +17,15 @@ export const ProductDetailsCard = ({ product }: { product: Product }) => {
                 {/* Main Details */}
                 <div className="space-y-5 col-span-2 pt-8 text-left">
                     {/* Title */}
-                    <div className="space-y-3 text-left w-full">
-                        <h2 className="text-4xl font-bold">{product.title}</h2>
-                        <p className="text-sm text-gray-500">{product.brand} | SKU: {product.sku}</p>
+                    <div className="space-y-3 flex flex-row justify-between  text-left w-full">
+
+                        <div>
+                            <h2 className="text-4xl font-bold">{product.title}</h2>
+                            <p className="text-sm text-gray-500">{product.brand} | SKU: {product.sku}</p>
+                        </div>
+                        <button className={`btn btn-lg border ${isCurrentThemeLight ? 'border-primary hover:bg-base-200' : 'border-secondary hover:bg-base-300'} bg-base-100  text-right btn-circle`}>
+                            <Pencil size={22} />
+                        </button>
                     </div>
 
                     {/* Price */}

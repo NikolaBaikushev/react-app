@@ -1,11 +1,8 @@
 
-import { useTheme } from "../context/ThemeContext";
-
-export const THEME_LIGHT = "emptymist";
-export const THEME_DARK = "grumpyplanet";
+import { THEME_DARK, THEME_LIGHT, useTheme } from "../context/ThemeContext";
 
 export const ThemeToggle = () => {
-  const [theme, setTheme] = useTheme();
+  const {theme, setTheme} = useTheme();
   
   const toggleTheme = () => {
     setTheme((prev) => (prev === THEME_LIGHT ? THEME_DARK : THEME_LIGHT));

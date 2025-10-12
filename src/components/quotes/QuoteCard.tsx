@@ -4,7 +4,7 @@ import { THEME_LIGHT, useTheme } from "../context/ThemeContext";
 export type QuoteProps = QuoteItem & { isFavourite: boolean, toggleFavouriteQuote: (id: number) => void};
 
 const QuoteCard = (props: QuoteProps) => {
-    const [theme] = useTheme()
+    const {theme} = useTheme()
 
     const baseClass = theme === THEME_LIGHT ? 'bg-base-100' : 'bg-base-200';
     

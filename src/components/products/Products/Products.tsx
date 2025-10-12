@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
-import { useGetProductsLimitedSortQuery } from "../../../redux/api/api";
+import { useCallback, useEffect, useEffectEvent, useState } from "react";
+import { dummyjsonApi, useGetProductsLimitedSortQuery } from "../../../redux/api/api";
 import { Skeleton } from "../../common/Skeleton";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
 import type { ProductsSortState } from "../../hooks/useProductsPageFilters";
+import { useAppDispatch } from "../../../redux/hooks";
 
 const LIMIT = 15;
 
-const Products = ({ sortBy, orderBy, search }: ProductsSortState & {search: string}) => {
+const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: string }) => {
     const [skip, setSkip] = useState(0);
     const { data, error, isLoading, isFetching } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
     const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
-
 
     useEffect(() => {
         if (data?.products?.length) {
@@ -23,6 +23,7 @@ const Products = ({ sortBy, orderBy, search }: ProductsSortState & {search: stri
         setProducts([])
         setSkip(0)
     }, [sortBy, orderBy, search])
+
 
     const hasMore = data && (products.length < data.total);
 
