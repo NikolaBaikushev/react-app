@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
 import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
 import { useTheme } from "../../context/ThemeContext";
+import { Heart, Trash, Trash2, Trash2Icon } from "lucide-react";
 
 type ProductCardProps = {
     product: Product
@@ -12,7 +13,7 @@ type ProductCardProps = {
 export const ProductCard = ({ product }: ProductCardProps) => {
     const dispatch = useAppDispatch();
     const favouriteProducts = useAppSelector(state => state.products.favouriteProducts);
-    const  { isCurrentThemeLight } = useTheme();
+    const { isCurrentThemeLight } = useTheme();
     const navigate = useNavigate();
 
     const themeClasses = {
@@ -21,7 +22,13 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         img_container_bg_base_class: !isCurrentThemeLight && 'bg-base-300'
     }
 
+    const toggleFavouriteProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        dispatch(toggleFavourite(product.id))
+    }
+
     return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class}`}>
+
         <figure>
             <img
                 className={`object-center rounded-2xl ${themeClasses.img_container_bg_base_class}`}
@@ -43,27 +50,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
                 <p className="text-lg font-semibold mt-2">${product.price}</p>
 
                 <div className="flex justify-between items-center w-full">
-                    <ProductRating rating={product.rating}/>
+                    <ProductRating rating={product.rating} />
 
-                    <div>
+                    <div className="inline-flex space-x-2">
                         <button
-                            onClick={() => dispatch(toggleFavourite(product.id))}
-                            className={`btn btn-circle ${favouriteProducts[product.id] ? 'btn-primary' : ''}`}
+                            onClick={toggleFavouriteProduct}
+                            className={`btn btn-circle btn-accent btn-outline hover:text-white ${favouriteProducts[product.id] && 'btn-active text-white'}`}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="2.5"
-                                stroke="currentColor"
-                                className="size-[1.2em]"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                                />
-                            </svg>
+                            <Heart  size={18}/>
+                        </button>
+                        <button className="btn btn-circle btn-error text-right btn-outline">
+                            <Trash2 size={18} />
                         </button>
                     </div>
                 </div>
