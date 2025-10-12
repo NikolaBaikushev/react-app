@@ -1,15 +1,13 @@
 # React Application
 
 ## Description
-This is a React application showcasing the usage of Context API and Redux with RTK and RTK Query.
+This is a React application demonstrating the use of the Context API and Redux with RTK and RTK Query.
 
-The application has two main data routes - **Quotes** and **Products**. The `/products` route is the more extensive one.
-
-
+The app has two main data routes — Quotes and Products. The `/products` route is the more comprehensive one.
 
 ### Application Details 
 #### Tech Stack
-- React + Vite + Redux + Redux Toolkit
+- React + Vite + Redux Toolkit
 - TailwindCSS
 - DaisyUI 
 - Lucide Icons
@@ -18,7 +16,7 @@ The application has two main data routes - **Quotes** and **Products**. The `/pr
 - [dummyjson.com](https://dummyjson.com/)
 
 #### More Information
-The application consist of the following
+The application includes:
 - Login
 - Register (not functional)
 - Quotes
@@ -27,27 +25,29 @@ The application consist of the following
 - Error Boundary 
 
 #### Login
-The user should login with this credentials: 
+The user should login with these credentials: 
 - username: **emilys**
 - password: **emilyspass**
 
 #### Quotes
-This page contains a list of Quotes from authors. A quote can be liked and the liked quotes are saved in Local Storage
+This page displays a list of quotes from authors. Quotes can be liked, and liked quotes are saved to Local Storage.
 
 #### Theme Switch
-The application has implemented theme switch for changing between *light* and *dark* theme. 
+The application supports switching between *light* and *dark* theme. 
 
 #### Error Boundary
-The application has specific route for throwing error and showcasing the ErrorBoundary component.
-Also there is a dedicated NotFoundPage component when trying to access endpoint which doesn't exist in the routes
+There is a specific route designed to throw an error to demonstrate the ErrorBoundary component.
+Also, a dedicated **NotFoundPage** component handles unknown routes.
 
 #### Products
-This is the most extensive endpoint and functionality which has been implemented. 
-- It has Products where it loads the initial ammount limit of products and upon scrolling it loads the next batch of products. Thus creating ***infinite scroll*** behaviour. The products page has ***search***, ***sort*** and ***create product*** functionality.
-- Product can be ***liked*** and ***deleted***. 
-- If clicked on the product card it loads the *details page*. In there is more information for the product as well as reviews left by customers who have tried the product. The product could be updated via the pencil icon on the top right.
+This is the most feature-rich endpoint, with functionality including:
+- Loading an initial limited number of products, and loading more on scroll (infinite scroll behavior).
+- Search, sort, and create product functionality.
+- Products can be liked and deleted.
+- Clicking on a product card opens a details page with more information and customer reviews.
+- Products can be updated via the pencil icon on the top right of the details page.
 
 ### Additional Information
-Most of the pages have **Skeleton** type loading and therefore artificial delays on getting the data.
-After CRUD operations a **Toast** component is shown.
-Most of the pages are responsive.
+- Most pages display **skeleton loaders** with artificial delays to simulate data fetching.
+- After CRUD operations, a **toast notification** is shown.
+- Most pages are responsive.
