@@ -60,6 +60,7 @@ type ProductCategoriesResponse = ProductCategory[];
 
 export enum ArtificialDelays {
   PRODUCTS = 5000,
+  QUOTES = 1000,
   PRODUCTS_INFINITE_SCROLL = 500,
   PRODUCTS_CATEGORIES = 2000,
   PRODUCTS_DETAILS_SUSPENSE = 3000

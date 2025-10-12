@@ -42,14 +42,14 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text">Username</span>
                         </label>
-                        <input name="username" required value={username} onChange={(e) => setUsername(e.currentTarget.value)} type="text" placeholder="Username" className="input input-bordered w-full validator" />
+                        <input name="username" required value={username} onChange={(e) => setUsername(e.currentTarget.value)} type="text" placeholder="ex: emilys" className="input input-bordered w-full validator" />
                     </div>
 
                     <div className="form-control w-full mb-6">
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password" required name="password" value={password} onChange={(e) => setPassword(e.currentTarget.value)} placeholder="Password" className="input input-bordered w-full validator" />
+                        <input type="password" required name="password" value={password} onChange={(e) => setPassword(e.currentTarget.value)} placeholder="ex: emilyspass" className="input input-bordered w-full validator" />
                     </div>
 
                     <button className="btn btn-primary text-base w-full" type="submit">Login</button>

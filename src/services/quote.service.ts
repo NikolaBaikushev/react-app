@@ -1,3 +1,4 @@
+import { ArtificialDelays } from "../redux/api/api";
 import type { QuotesResponse } from "../types/quotes/quotes";
 import { API_BASE_URL } from "./auth.service"
 
@@ -9,6 +10,6 @@ export const getAllQuotes = async (): Promise<QuotesResponse> => {
     }
 
     const data = await response.json();
-
+    await new Promise((resolve) => setTimeout(resolve, ArtificialDelays.QUOTES))
     return data;
 }
