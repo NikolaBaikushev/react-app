@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from "react"
+import { useEffect } from "react"
 import withPortal from "../hoc/withPortal.tsx"
 import useToast from "../hooks/useToast"
 

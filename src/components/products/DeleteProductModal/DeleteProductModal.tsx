@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, type MouseEvent } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 import withPortal from "../../hoc/withPortal";
 import { useDeleteProductMutation, type Product } from "../../../redux/api/api";

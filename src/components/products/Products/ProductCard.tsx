@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useDeleteProductMutation, type Product } from "../../../redux/api/api"
+import { type Product } from "../../../redux/api/api"
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
 import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
-import { Themes, useTheme } from "../../context/ThemeContext";
-import { Heart, Trash, Trash2, Trash2Icon } from "lucide-react";
-import useToast from "../../hooks/useToast";
-import { ToastType } from "../../../redux/slices/toast/toastSlice";
-import { useRef, type MouseEvent } from "react";
+import { useTheme } from "../../context/ThemeContext";
+import { Heart, Trash2 } from "lucide-react";
+import { useRef } from "react";
 import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
 import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 

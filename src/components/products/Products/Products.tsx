@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useEffectEvent, useState } from "react";
-import { dummyjsonApi, useGetProductsLimitedSortQuery } from "../../../redux/api/api";
+import { useCallback, useEffect, useState } from "react";
+import { useGetProductsLimitedSortQuery } from "../../../redux/api/api";
 import { Skeleton } from "../../common/Skeleton";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
 import type { ProductsSortState } from "../../hooks/useProductsPageFilters";
-import { useAppDispatch } from "../../../redux/hooks";
 
 const LIMIT = 15;
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Products from "./Products/Products";
 import useProductsPageFilters from "../hooks/useProductsPageFilters";
 import CreateProductModal from "./CreateProductModal/CreateProductModal";

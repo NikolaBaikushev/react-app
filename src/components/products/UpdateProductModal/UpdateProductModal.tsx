@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useGetProductsCategoriesQuery, useUpdateProductMutation, type Product } from "../../../redux/api/api";
 import withPortal from "../../hoc/withPortal";
-import { CircleDollarSign, ClipboardList, ScrollText, Tag, TextAlignJustify } from "lucide-react";
+import { CircleDollarSign, ScrollText, Tag, TextAlignJustify } from "lucide-react";
 import useToast from "../../hooks/useToast";
 import { ToastType } from "../../../redux/slices/toast/toastSlice";
 import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
