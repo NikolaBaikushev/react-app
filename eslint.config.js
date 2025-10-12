@@ -26,8 +26,7 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-unused-vars': 'warn',
-            "unused-imports/no-unused-imports": "warn",
-
+      "unused-imports/no-unused-imports": "warn",
     }
   },
 ])

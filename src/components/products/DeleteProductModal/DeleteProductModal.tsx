@@ -4,6 +4,7 @@ import withPortal from "../../hoc/withPortal";
 import { useDeleteProductMutation, type Product } from "../../../redux/api/api";
 import useToast from "../../hooks/useToast";
 import { ToastType } from "../../../redux/slices/toast/toastSlice";
+import { useTheme } from "../../context/ThemeContext";
 
 
 
@@ -18,6 +19,7 @@ const DeleteProductModalComponent = forwardRef<ModalImperativeHandle, DeleteProd
         const dialogRef = useRef<HTMLDialogElement>(null);
         const [deleteProduct] = useDeleteProductMutation();
         const { setToast } = useToast();
+        const {isCurrentThemeLight} = useTheme();
 
         useImperativeHandle(ref, () => {
             return {
@@ -43,7 +45,7 @@ const DeleteProductModalComponent = forwardRef<ModalImperativeHandle, DeleteProd
 
         return <>
             <dialog ref={dialogRef} className="modal" onClick={(e) => e.stopPropagation()} >
-                <div className="modal-box space-y-3">
+                <div className={`modal-box space-y-3 ${!isCurrentThemeLight && 'bg-base-300'}`}>
                     <h3 className="font-bold text-xl text-left">Delete Product</h3>
                     <h2 className="text-base ">Are you sure you want to delete? </h2>
 

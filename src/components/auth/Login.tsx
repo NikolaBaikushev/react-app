@@ -11,7 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState(new Set<string>());
     const navigate = useNavigate();
-    const [user, setUser] = useAuth();
+    const {setUser} = useAuth();
 
     const handleLogin = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();

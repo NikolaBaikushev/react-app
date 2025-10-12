@@ -12,9 +12,10 @@ import React from 'react'
 import LazyComponentWrapper from './components/common/LazyComponentWrapper'
 import { delayImport } from './utils/helpers'
 import ProductDetailsPageFallback from './components/products/ProductDetailsPageFallback'
+import { ArtificialDelays } from './redux/api/api'
 
 
-const ProductDetailsPage = React.lazy(() => delayImport(3000, import('./components/products/ProductDetailsPage')));
+const ProductDetailsPage = React.lazy(() => delayImport(ArtificialDelays.PRODUCTS_DETAILS_SUSPENSE, import('./components/products/ProductDetailsPage')));
 
 function App() {
   return (

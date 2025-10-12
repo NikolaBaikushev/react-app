@@ -1,12 +1,11 @@
-import { createContext, useContext, useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import { deleteLocalStorageItem, getLocalStorageItem, LocalStorageKeys, setLocalStorageItem } from "../../services/localStorage.service";
+import { createContext, useContext, useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import { getLocalStorageItem, LocalStorageKeys, setLocalStorageItem } from "../../services/localStorage.service";
 import type { User } from "../../types/auth/login";
-import { useNavigate } from "react-router-dom";
 
-
-
-type AuthContextType = [User | null, Dispatch<SetStateAction<User | null>>];
-
+type AuthContextType = {
+    user: User | null,
+    setUser: Dispatch<SetStateAction<User | null>>
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -24,27 +23,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [user]);
 
+    const context = useMemo(() => ({
+        user,
+        setUser
+    }), [user])
+
     return (
-        <AuthContext.Provider value={[user, setUser]}>
+               <AuthContext.Provider value={context}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
-  return context;
+    const context = useContext(AuthContext);
+    if (!context) throw new Error("useAuth must be used within AuthProvider");
+    return context;
 };
 
-
-export const useLogout = () => {
-  const [, setUser] = useAuth();
-  const navigate = useNavigate();
-
-  return () => {
-    deleteLocalStorageItem(LocalStorageKeys.USER);
-    setUser(null);
-    navigate("/login");
-  };
-};

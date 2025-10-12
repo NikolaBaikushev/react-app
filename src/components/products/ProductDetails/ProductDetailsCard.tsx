@@ -3,13 +3,13 @@ import { type Product } from "../../../redux/api/api";
 import { ProductDetailsCardImages, ProductDetailsMoreInformation, ProductDetailsReviews, ProductRating } from "./ProductDetailsCardComponents";
 import { useTheme } from "../../context/ThemeContext";
 import { useRef } from "react";
-import type { UpdateProductModalHandle } from "../UpdateProductModal/UpdateProductModal";
 import UpdateProductModal from "../UpdateProductModal/UpdateProductModal";
+import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 
 
 export const ProductDetailsCard = ({ product }: { product: Product }) => {
     const { isCurrentThemeLight } = useTheme();
-    const modalRef = useRef<UpdateProductModalHandle>(null)
+    const modalRef = useRef<ModalImperativeHandle>(null)
 
 
     return (<>

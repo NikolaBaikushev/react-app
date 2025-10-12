@@ -5,7 +5,7 @@ import { toggleFavourite } from "../../../redux/slices/products/productsSlice";
 import { ProductRating } from "../ProductDetails/ProductDetailsCardComponents";
 import { useTheme } from "../../context/ThemeContext";
 import { Heart, Trash2 } from "lucide-react";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import DeleteProductModal from "../DeleteProductModal/DeleteProductModal";
 import type { ModalImperativeHandle } from "../../../types/common/modalHandle";
 
@@ -14,6 +14,11 @@ type ProductCardProps = {
     refetch: () => void;
 };
 
+const getClassesBasedOnTheme = (isCurrentThemeLight: boolean) => ({
+    card_container_bg_base_class: isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200',
+    card_container_clickable_bg_base_class: isCurrentThemeLight ? 'hover:bg-base-200' : 'hover:bg-neutral',
+    img_container_bg_base_class: !isCurrentThemeLight && 'bg-base-300'
+})
 
 export const ProductCard = ({ product, refetch }: ProductCardProps) => {
     const dispatch = useAppDispatch();
@@ -23,11 +28,7 @@ export const ProductCard = ({ product, refetch }: ProductCardProps) => {
 
     const deleteModalRef = useRef<ModalImperativeHandle>(null)
 
-    const themeClasses = {
-        card_container_bg_base_class: isCurrentThemeLight ? 'bg-base-100' : 'bg-base-200',
-        card_container_clickable_bg_base_class: isCurrentThemeLight ? 'hover:bg-base-200' : 'hover:bg-neutral',
-        img_container_bg_base_class: !isCurrentThemeLight && 'bg-base-300'
-    }
+    const classes = useMemo(() => getClassesBasedOnTheme(isCurrentThemeLight), [isCurrentThemeLight])
 
     const toggleFavouriteProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -41,11 +42,11 @@ export const ProductCard = ({ product, refetch }: ProductCardProps) => {
         deleteModalRef.current?.openModal()
     }
 
-    return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${themeClasses.card_container_bg_base_class} ${themeClasses.card_container_clickable_bg_base_class}`}>
+    return <div onClick={() => navigate(`/products/${product.id}`)} className={`card cursor-pointer shadow-sm ${classes.card_container_bg_base_class} ${classes.card_container_clickable_bg_base_class}`}>
         <DeleteProductModal ref={deleteModalRef} product={product} onDeleteSuccess={refetch} />
-        <figure>
+        <figure className="">
             <img
-                className={`object-center rounded-2xl ${themeClasses.img_container_bg_base_class}`}
+                className={`object-center ${!isCurrentThemeLight && 'rounded-4xl '} ${classes.img_container_bg_base_class}`}
                 src={product.thumbnail}
                 alt={product.description} />
         </figure>

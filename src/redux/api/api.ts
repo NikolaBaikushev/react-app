@@ -58,6 +58,14 @@ type ProductCategory = {
 
 type ProductCategoriesResponse = ProductCategory[];
 
+export enum ArtificialDelays {
+  PRODUCTS = 5000,
+  PRODUCTS_INFINITE_SCROLL = 500,
+  PRODUCTS_CATEGORIES = 2000,
+  PRODUCTS_DETAILS_SUSPENSE = 3000
+  
+}
+
 export const dummyjsonApi = createApi({
   reducerPath: 'dummyjsonApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
@@ -65,17 +73,17 @@ export const dummyjsonApi = createApi({
     getProducts: builder.query<Product[], void>({
       query: () => `products`,
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 5000))
+        await new Promise((resolve) => setTimeout(resolve, ArtificialDelays.PRODUCTS))
         return response.products
       },
     }),
-    getProductsLimited: builder.query<ProductResponse, { limit: number, skip: number }>({
-      query: ({ limit, skip }) => `products?limit=${limit}&skip=${skip}`,
-      transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 500))
-        return response
-      },
-    }),
+    // getProductsLimited: builder.query<ProductResponse, { limit: number, skip: number }>({
+    //   query: ({ limit, skip }) => `products?limit=${limit}&skip=${skip}`,
+    //   transformResponse: async (response: ProductResponse) => {
+    //     await new Promise((resolve) => setTimeout(resolve, 500))
+    //     return response
+    //   },
+    // }),
     getProductsLimitedSort: builder.query<ProductResponse, { limit: number, skip: number, sortBy?: SortByValues, orderBy?: OrderByValues, search: string }>({
       query: ({ limit, skip, sortBy, orderBy = 'asc', search }) => {
         const params = new URLSearchParams({
@@ -96,12 +104,12 @@ export const dummyjsonApi = createApi({
         return base;
       },
       transformResponse: async (response: ProductResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 500))
+        await new Promise((resolve) => setTimeout(resolve, ArtificialDelays.PRODUCTS_INFINITE_SCROLL))
         return response
       },
     }),
     getProduct: builder.query<Product, number>({
-      query: (id: number) => `products/${id}`
+      query: (id: number) => `products/${id}`,
     }),
     addProduct: builder.mutation<Product, Partial<Product>>({
       query: ({ title, price }) => ({
@@ -128,7 +136,7 @@ export const dummyjsonApi = createApi({
     getProductsCategories: builder.query<Omit<ProductCategory, 'url'>[], void>({
       query: () => `products/categories`,
       transformResponse: async (response: ProductCategoriesResponse) => {
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+        await new Promise((resolve) => setTimeout(resolve, ArtificialDelays.PRODUCTS_CATEGORIES))
 
         return response.map((data: ProductCategory) => ({
           name: data.name,
@@ -140,4 +148,4 @@ export const dummyjsonApi = createApi({
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery, useUpdateProductMutation, useDeleteProductMutation} = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery, useUpdateProductMutation, useDeleteProductMutation} = dummyjsonApi;

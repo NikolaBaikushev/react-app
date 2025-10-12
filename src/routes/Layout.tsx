@@ -1,16 +1,17 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { ThemeToggle } from "../components/common/ThemeToggle";
-import { useAuth, useLogout } from "../components/context/AuthContext";
+import { useAuth } from "../components/context/AuthContext";
 import { ErrorBoundaryWrapper } from "../components/common/ErrorBoundaryWrapper";
 import useToast from "../components/hooks/useToast";
 import Toast from "../components/common/Toast";
+import { useLogout } from "../components/hooks/useLogout";
 
 const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
   `btn text-xl ${isActive ? "btn-primary" : "btn-ghost"}`;
 
 
 export const Layout = () => {
-  const [user, _] = useAuth();
+  const {user}= useAuth();
   const { toast } = useToast();
   const logoutUser = useLogout();
 

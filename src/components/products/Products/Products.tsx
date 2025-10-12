@@ -36,7 +36,7 @@ const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: str
 
     return (
         <>{isLoading
-            ? <Skeleton length={LIMIT} container="div" className="grid grid-cols-3 gap-10 items-center w-full" />
+            ? <Skeleton length={LIMIT} container="div" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 items-center w-full" />
             :
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 items-stretch min-h-[80vh]">
 

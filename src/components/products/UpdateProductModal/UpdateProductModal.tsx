@@ -17,9 +17,8 @@ const UpdateProductModalComponent = forwardRef<ModalImperativeHandle, UpdateProd
         const dialogRef = useRef<HTMLDialogElement>(null);
         const formRef = useRef<HTMLFormElement>(null);
         const { data: categories, error, isLoading: isCategoriesLoading } = useGetProductsCategoriesQuery();
-        const [updateProduct, result ] = useUpdateProductMutation();
+        const [updateProduct, result] = useUpdateProductMutation();
         const { setToast } = useToast();
-        
 
         useImperativeHandle(ref, () => ({
             openModal,
@@ -38,11 +37,11 @@ const UpdateProductModalComponent = forwardRef<ModalImperativeHandle, UpdateProd
             e.preventDefault();
             const form = new FormData(e.currentTarget);
             const data = Object.fromEntries(form.entries());
-            const res = await updateProduct({id: product.id, body: data});
+            const res = await updateProduct({ id: product.id, body: data });
             console.log(res);
             console.log(result);
             if ('data' in res) {
-                setToast(`Product with ID: ${product.id} successfully updated!`,ToastType.SUCCESS);
+                setToast(`Product with ID: ${product.id} successfully updated!`, ToastType.SUCCESS);
                 // console.log(result.data)
                 closeModal();
             } else if (res.error) {
@@ -78,7 +77,7 @@ const UpdateProductModalComponent = forwardRef<ModalImperativeHandle, UpdateProd
 
                             <label className="text-base textarea input w-full" >
                                 <ScrollText size={14} />
-                                <input type="text" name="description"  defaultValue={product.description} placeholder="Description" />
+                                <input type="text" name="description" defaultValue={product.description} placeholder="Description" />
                             </label>
 
                             <label className="text-base select select-bordered w-full" >
