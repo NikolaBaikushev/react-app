@@ -106,13 +106,24 @@ export const dummyjsonApi = createApi({
     addProduct: builder.mutation<Product, Partial<Product>>({
       query: ({ title, price }) => ({
         url: `products/add`,
+        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({ title, price })
       })
     }),
+    updateProduct: builder.mutation<Product, {id: number, body: Partial<Product>}>({
+      query: ({id, body}) => ({
+        url: `products/${id}`,
+        headers: { 'Content-Type': 'application/json' },
+        method: 'PUT',
+        body: JSON.stringify(body)
+      })
+    }),
     getProductsCategories: builder.query<Omit<ProductCategory, 'url'>[], void>({
       query: () => `products/categories`,
-      transformResponse: (response: ProductCategoriesResponse) => {
+      transformResponse: async (response: ProductCategoriesResponse) => {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
         return response.map((data: ProductCategory) => ({
           name: data.name,
           slug: data.slug
@@ -123,4 +134,4 @@ export const dummyjsonApi = createApi({
 })
 
 
-export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery } = dummyjsonApi;
+export const { useGetProductsQuery, useGetProductsLimitedQuery, useGetProductsLimitedSortQuery, useGetProductQuery, useAddProductMutation, useGetProductsCategoriesQuery, useUpdateProductMutation} = dummyjsonApi;

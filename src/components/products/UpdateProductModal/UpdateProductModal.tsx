@@ -1,7 +1,9 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { useGetProductsCategoriesQuery, type Product } from "../../../redux/api/api";
+import { useGetProductsCategoriesQuery, useUpdateProductMutation, type Product } from "../../../redux/api/api";
 import withPortal from "../../hoc/withPortal";
 import { CircleDollarSign, ClipboardList, ScrollText, Tag, TextAlignJustify } from "lucide-react";
+import useToast from "../../hooks/useToast";
+import { ToastType } from "../../../redux/slices/toast/toastSlice";
 
 
 export type UpdateProductModalHandle = {
@@ -17,8 +19,10 @@ const UpdateProductModalComponent = forwardRef<UpdateProductModalHandle, UpdateP
     ({ product }: UpdateProductModalComponentProps, ref) => {
         const dialogRef = useRef<HTMLDialogElement>(null);
         const formRef = useRef<HTMLFormElement>(null);
-        const { data: categories, error, isLoading: isCategoriesLoading } = useGetProductsCategoriesQuery()
-
+        const { data: categories, error, isLoading: isCategoriesLoading } = useGetProductsCategoriesQuery();
+        const [updateProduct, result ] = useUpdateProductMutation();
+        const { setToast } = useToast();
+        
 
         useImperativeHandle(ref, () => ({
             openModal,
@@ -33,9 +37,20 @@ const UpdateProductModalComponent = forwardRef<UpdateProductModalHandle, UpdateP
             dialogRef.current?.close();
         };
 
-        const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+        const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
             e.preventDefault();
-            closeModal();
+            const form = new FormData(e.currentTarget);
+            const data = Object.fromEntries(form.entries());
+            const res = await updateProduct({id: product.id, body: data});
+            console.log(res);
+            console.log(result);
+            if ('data' in res) {
+                setToast(`Product with ID: ${product.id} successfully updated!`,ToastType.SUCCESS);
+                // console.log(result.data)
+                closeModal();
+            } else if (res.error) {
+                setToast(`Something went wrong updating product! ${res.error}`, ToastType.ERROR)
+            }
         }
 
         return (
@@ -56,27 +71,29 @@ const UpdateProductModalComponent = forwardRef<UpdateProductModalHandle, UpdateP
                         >
                             <label className="text-base input input-bordered w-full mb-4 size-10">
                                 <TextAlignJustify size={14} />
-                                <input type="text" defaultValue={product.title} placeholder="Product name" className="" />
+                                <input type="text" name="title" defaultValue={product.title} placeholder="Product name" className="" />
                             </label>
                             <label className="text-base input input-bordered w-full mb-4 size-10" >
                                 <CircleDollarSign size={14} />
-                                <input type="number" defaultValue={product.price} placeholder="Price" />
+                                <input type="number" name="price" defaultValue={product.price} placeholder="Price" />
 
                             </label>
 
                             <label className="text-base textarea input w-full" >
                                 <ScrollText size={14} />
-                                <input type="text" defaultValue={product.description} placeholder="Description" /></label>
+                                <input type="text" name="description"  defaultValue={product.description} placeholder="Description" />
+                            </label>
 
                             <label className="text-base select select-bordered w-full" >
-                                <Tag size={14}/>
-                                <select>
-                                    {categories?.map(c => <option value={c.slug} key={c.slug}>{c.name}</option>)}
-                                </select>
+                                <Tag size={14} className="z-50" />
+                                {isCategoriesLoading ? <span className={`mx-1 loading loading-dots loading-sm bg-primary`}></span>
+                                    : <select name="category" defaultValue={product.category}>
+                                        {categories?.map(c => <option value={c.slug} key={c.slug}>{c.name}</option>)}
+                                    </select>}
                             </label>
 
                             <button type="submit" className="btn btn-primary w-full">
-                                Save
+                                Update
                             </button>
                         </form>
                     </div>
