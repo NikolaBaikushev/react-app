@@ -4,45 +4,29 @@ import { Skeleton } from "../../common/Skeleton";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
 import type { ProductsSortState } from "../../hooks/useProductsPageFilters";
+import { useProducts } from "../../hooks/useProducts";
+import useToast from "../../hooks/useToast";
+import { ToastType } from "../../../redux/slices/toast/toastSlice";
 
 const LIMIT = 15;
 
 const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: string }) => {
-    const [skip, setSkip] = useState(0);
-    const { data, error, isLoading, isFetching, refetch, } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
-    const [products, setProducts] = useState<Product[]>([]);
+    const {
+        products,
+        isLoading,
+        isFetching,
+        loadMore,
+        hasMoreProducts,
+        error,
+        refetch,
+    } = useProducts(sortBy, orderBy, search)
+    const { setToast} = useToast();
 
-    useEffect(() => {
-        setProducts([])
-        setSkip(0)
-    }, [sortBy, orderBy, search])
+    const sentinelRef = useInfiniteScroll(loadMore, hasMoreProducts as boolean, isFetching);
 
-    useEffect(() => {
-        if (!data?.products?.length) return;
-
-        if (skip === 0) {
-            setProducts(data.products);
-        } else {
-            setProducts((prev) => {
-                const newItems = data.products.filter(
-                    (p) => !prev.some((existing) => existing.id === p.id)
-                );
-                return [...prev, ...newItems];
-            });
-        }
-    }, [data, skip]);
-
-
-
-    const hasMore = data && (products.length < data.total);
-
-    const loadMore = useCallback(() => {
-        if (!isFetching) {
-            setSkip((state) => state + LIMIT);
-        }
-    }, [isFetching]);
-
-    const sentinelRef = useInfiniteScroll(loadMore, hasMore as boolean, isFetching);
+    if (error) {
+        setToast(`Something went wrong! ${error}`, ToastType.ERROR);
+    }
 
     return (
         <>{isLoading
@@ -57,7 +41,7 @@ const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: str
                 <Skeleton length={LIMIT} container="div" className="mt-5 grid grid-cols-3 gap-10 items-center w-full" />
             </>}
 
-            {hasMore && !isFetching && <div ref={sentinelRef} style={{ height: '1px' }} />}
+            {hasMoreProducts && !isFetching && <div ref={sentinelRef} style={{ height: '1px' }} />}
         </>
     )
 
