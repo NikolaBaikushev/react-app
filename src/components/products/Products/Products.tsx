@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useGetProductsLimitedSortQuery } from "../../../redux/api/api";
+import { useGetProductsLimitedSortQuery, type Product } from "../../../redux/api/api";
 import { Skeleton } from "../../common/Skeleton";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { ProductCard } from "./ProductCard";
@@ -10,18 +10,28 @@ const LIMIT = 15;
 const Products = ({ sortBy, orderBy, search }: ProductsSortState & { search: string }) => {
     const [skip, setSkip] = useState(0);
     const { data, error, isLoading, isFetching, refetch, } = useGetProductsLimitedSortQuery({ limit: LIMIT, skip: skip, sortBy, orderBy: orderBy, search });
-    const [products, setProducts] = useState(() => data?.products?.length ? data.products : []);
-
-    useEffect(() => {
-        if (data?.products?.length) {
-            setProducts(prev => [...prev, ...data?.products]);
-        }
-    }, [data]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         setProducts([])
         setSkip(0)
     }, [sortBy, orderBy, search])
+
+    useEffect(() => {
+        if (!data?.products?.length) return;
+
+        if (skip === 0) {
+            setProducts(data.products);
+        } else {
+            setProducts((prev) => {
+                const newItems = data.products.filter(
+                    (p) => !prev.some((existing) => existing.id === p.id)
+                );
+                return [...prev, ...newItems];
+            });
+        }
+    }, [data, skip]);
+
 
 
     const hasMore = data && (products.length < data.total);
