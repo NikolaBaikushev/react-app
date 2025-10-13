@@ -1,57 +1,60 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { useGetProductsLimitedSortQuery, type Product } from "../../redux/api/api";
 import type { SortByValues, OrderByValues } from "./useProductsPageFilters";
+import { usePagination } from "./usePagination";
 
 const LIMIT = 15;
 
-export const usePagination = (limit: number) => {
-    const [skip, setSkip] = useState(0);
-
-    const resetPagination = useCallback(() => {
-        setSkip(0);
-    }, []);
-
-    const incrementSkip = useCallback(() => {
-        setSkip((prev) => prev + limit);
-    }, [limit]);
-
-    const hasMore = useCallback((total: number, currentLength: number) => {
-        return currentLength < total;
-    }, []);
-
-    return { skip, resetPagination, incrementSkip, hasMore };
-};
-
-export const useProducts = (sortBy: SortByValues, orderBy: OrderByValues, search: string) => {
+export const useProducts = (
+    sortBy: SortByValues,
+    orderBy: OrderByValues,
+    search: string
+) => {
     const { skip, resetPagination, incrementSkip, hasMore } = usePagination(LIMIT);
-    const { data, error, isLoading, isFetching, refetch } = useGetProductsLimitedSortQuery({
-        limit: LIMIT,
-        skip,
-        sortBy,
-        orderBy,
-        search,
-    });
+
+    const { data, error, isLoading, isFetching, refetch } =
+        useGetProductsLimitedSortQuery({
+            limit: LIMIT,
+            skip,
+            sortBy,
+            orderBy,
+            search,
+        });
 
     const [products, setProducts] = useState<Product[]>([]);
+    const [hasFirstPageLoaded, setHasFirstPageLoaded] = useState(false);
 
     useEffect(() => {
         resetPagination();
         setProducts([]);
+        setHasFirstPageLoaded(false); 
     }, [sortBy, orderBy, search, resetPagination]);
 
     useEffect(() => {
-        if (data?.products?.length) {
-            updateProducts(data.products);
+        if (!data?.products?.length) return;
+
+        if (skip === 0) {
+            setProducts(data.products);
+            setHasFirstPageLoaded(true); 
+        } else {
+            setProducts((prev) => {
+                const newItems = data.products.filter(
+                    (product) => !prev.some((existing) => existing.id === product.id)
+                );
+                return [...prev, ...newItems];
+            });
         }
     }, [data, skip]);
 
     const loadMore = useCallback(() => {
-        if (!isFetching) {
+        if (!isFetching && hasFirstPageLoaded) {
             incrementSkip();
         }
-    }, [isFetching, incrementSkip]);
+    }, [isFetching, hasFirstPageLoaded, incrementSkip]);
 
-    const hasMoreProducts = useMemo(() => hasMore(data?.total ?? 0, products.length), [data, products, hasMore]);
+    const hasMoreProducts = useMemo(() => {
+        return hasMore(data?.total ?? 0, products.length);
+    }, [data?.total, products.length, hasMore]);
 
     return {
         products,
@@ -62,13 +65,4 @@ export const useProducts = (sortBy: SortByValues, orderBy: OrderByValues, search
         error,
         refetch,
     };
-
-    function updateProducts(newData: Product[]) {
-        setProducts((prev) => {
-            const newItems = newData.filter(
-                (product) => !prev.some((existing) => existing.id === product.id)
-            );
-            return [...prev, ...newItems];
-        });
-    }
 };
