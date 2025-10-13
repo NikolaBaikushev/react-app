@@ -17,7 +17,7 @@ export const Layout = () => {
 
   return (
     <>
-      {toast && <Toast />}
+      {toast.message && <Toast />}
       <div>
         <div>
           <div className="navbar bg-base-300 w-full">

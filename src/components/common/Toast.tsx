@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import withPortal from "../hoc/withPortal.tsx"
 import useToast from "../hooks/useToast"
+import { ToastType } from "../../redux/slices/toast/toastSlice.ts";
 
 const ToastComponent = () => {
     const { toast, clearToast } = useToast();
@@ -17,10 +18,12 @@ const ToastComponent = () => {
     if (!toast.message) {
         return null
     }
-    
+    const alertClass = toast.type === ToastType.SUCCESS ?
+        'alert-success' : toast.type === ToastType.ERROR ?
+        'alert-error' : 'alert-info'
     return <>
         <div className="toast toast-end toast-top sm:toast-end sm:toast-bottom w-xs sm:w-lg sm:animate-bounce sm:duration-500 z-50 ">
-            <div className={`alert alert-${toast.type} min-w-fit`}>
+            <div className={`alert ${alertClass} min-w-fit`}>
                 <span className="text-base">{toast.message}</span>
             </div>
         </div>
